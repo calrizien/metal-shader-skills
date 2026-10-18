@@ -22,6 +22,8 @@ jobs:
         run: python3 tests/build_gallery.py --check
       - name: Lint, drift and compile every unit
         run: python3 skills/shader-art-coding/scripts/glsl_tools.py check
+      - name: Eval suite matches the plugin-eval format
+        run: python3 tests/check_evals.py
 
   webgl:
     name: WebGL2 compile, GPU property tests, renders

@@ -114,6 +114,7 @@ The full catalog with signatures, exactness and uses is
 | WebGL2 compile | `tests/` harness | all 147 units compile under ANGLE, which also enforces WebGL-only rules |
 | GPU property tests | `tests/properties.py` | 84 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips |
 | Renders | harness + gallery | every template renders with no NaNs and no black frames; images saved to `gallery/` |
+| Skill effect | `evals/` (`claude plugin eval`, paid, manual) | output-rule adherence with the skill vs without it on 6 shader tasks, plus no false triggers on 3 near-miss tasks; see [evals/README.md](evals/README.md) |
 
 Run it locally: `python3 tests/build_harness.py && python3 tests/serve.py`, then open
 `http://127.0.0.1:8765/build/harness.html`. Headless: `python3 tests/run_webgl.py` (needs Playwright).
@@ -135,6 +136,7 @@ Run it locally: `python3 tests/build_harness.py && python3 tests/serve.py`, then
 ```text
 skills/shader-art-coding/   the skill: SKILL.md, glsl/ library, templates/, references/, scripts/glsl_tools.py
 tests/                      WebGL2 harness, GPU property tests, gallery builder, headless runner
+evals/                      plugin eval suite: with vs without the skill
 gallery/                    rendered templates and paste-ready bundles
 adapters/                   prompts for tools without skill support
 .claude-plugin/             Claude Code plugin + marketplace manifests

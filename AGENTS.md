@@ -13,6 +13,7 @@ skills/shader-art-coding/      the skill (this is what gets installed)
   references/                  guides and formula-code couples; library-index.md is generated
   scripts/glsl_tools.py        search | bundle | check | index  (stdlib Python only)
 tests/                         GPU property tests and the WebGL2 harness
+evals/                         `claude plugin eval` suite: skill vs no skill (paid to run; see evals/README.md)
 gallery/                       rendered PNGs and paste-ready bundled shaders for each template (generated)
 adapters/                      copy-in prompts for tools without skill support
 .claude-plugin/                Claude Code plugin + marketplace manifests
@@ -27,6 +28,7 @@ python3 tests/build_gallery.py                                         # regener
 python3 tests/build_harness.py && python3 tests/serve.py               # WebGL2 checks: open /build/harness.html
 python3 tests/build_harness.py --save-gallery                          # same, and rewrite gallery/*.png
 python3 tests/run_webgl.py                                             # headless WebGL2 checks (needs playwright)
+python3 tests/check_evals.py                                           # validate evals/ without running it (free)
 ```
 
 ## Rules for library code (`glsl/`)

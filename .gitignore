@@ -6,5 +6,6 @@ tmp/
 *.wav
 *.webm
 build/
+evals/results/
 .claude/launch.json
 __pycache__/
