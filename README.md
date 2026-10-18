@@ -2,7 +2,7 @@
 
 A skill that teaches coding agents to write procedural GLSL shaders that compile on the first try and look
 intentional. It works with Claude Code, Codex, Cursor, Copilot, Gemini and others. It pairs a shader-craft
-workflow with a **verified GLSL building-block library**: 179 functions across 18 modules, each one compiled in
+workflow with a **verified GLSL building-block library**: 180 functions across 18 modules, each one compiled in
 WebGL2 and numerically tested on the GPU. A bundler inlines exactly the functions a shader uses, so the result
 pastes straight into Shadertoy.
 
@@ -90,7 +90,7 @@ What the commands do:
 | Module | Highlights |
 |---|---|
 | `hash` | PCG integer hashes (`pcg3d`, `pcg4d`): bit-exact across GPUs, no sine; safe integer-input float wrappers |
-| `noise` | value and gradient noise with analytic derivatives, fBm, eroded fBm, ridged fBm, two-level domain warp, curl noise, Voronoi (F1/F2, exact borders, smooth), interleaved-gradient and R2 dithering |
+| `noise` | value, gradient and 2D simplex noise with analytic derivatives, fBm, eroded/ridged/billow fBm, two-level domain warp, hybrid terrain height, curl noise, Voronoi (F1/F2, borders, smooth), interleaved-gradient and R2 dithering |
 | `pattern` | box-filtered checker, grid and stripes (alias-free with no supersampling), hex grid with edge distance, Truchet |
 | `sdf3d` | 22 primitives including exact capped cone, round cone, cut and hollow spheres, death star, hex prism, link, gyroid, 3D Bézier tube |
 | `sdf2d` | 16 primitives including vesica, moon, heart, star, regular polygon, rounded box with per-corner radii, quadratic Bézier |
@@ -105,14 +105,46 @@ What the commands do:
 The full catalog with signatures, exactness and uses is
 [`references/library-index.md`](skills/shader-art-coding/references/library-index.md).
 
+## Noise: from a first field to a game use case
+
+The [noise learning guide](skills/shader-art-coding/references/noise-use-cases.md) covers all ten entries in the
+Noise Learning Progression reference: what each means, where its code lives, when to use it, tuning, and links to
+author-maintained external implementations. It includes eleven compile-checked recipes and two complete shaders.
+
+| Technique | Call the library | Use it for |
+|---|---|---|
+| Perlin-style gradient | `gradientNoise`, `gradientNoiseD` | Broad hills, weather masks, surface normals |
+| Voronoi | `voronoiBorder`, `smoothVoronoi` | Rock plates, constant-width cracks, cell walls |
+| Simplex | `simplexNoise`, `simplexNoiseD` | Ripples, rotating-gradient flow, churning lava |
+| Fractal / fBm | `fbm`, `erodedFbm` | Multiscale terrain, clouds, slope-damped detail |
+| Domain warp | `warpedFbm` | Marble, agate, distorted terrain and cloud bands |
+| Value | `valueNoise`, `valueNoiseD` | Cheap smooth masks; quantize inputs for retro blocks |
+| Cellular / Worley | `voronoi` F1/F2 and cell IDs | Biome regions, foam, per-stone variation |
+| Ridged | `ridgedFbm` | Mountain crests, canyons, rocky veins |
+| Billow | `billowFbm` | Puffy smoke, cumulus lobes, rounded terrain |
+| Hybrid | `hybridTerrainHeight` | Bounded heightmaps combining warped hills, ridges and cells |
+
+These functions are in [`noise.glsl`](skills/shader-art-coding/glsl/noise.glsl). Voronoi and Worley refer to the
+same cellular family here; fBm and domain warping compose base fields. Simplex performance depends on implementation
+and target hardware. The guide distinguishes smooth value noise from blocky hashes and designed river masks from
+hydrological simulation.
+
+| [![Ten noise studies](gallery/noise-progression.png)](gallery/noise-progression.glsl) | [![Hybrid terrain and river relief map](gallery/noise-terrain-map.png)](gallery/noise-terrain-map.glsl) |
+|---|---|
+| Top: gradient, Voronoi borders, simplex, fBm, marble warp. Bottom: smooth value, F2−F1 cellular, ridged, billow, hybrid. | Putting it together: warped hills, ridged mountains, cellular breakup, slope-based materials and a designed river channel. |
+
+Click a preview for the standalone Shadertoy shader. Editable sources:
+[`noise-progression.glsl`](skills/shader-art-coding/templates/noise-progression.glsl) and
+[`noise-terrain-map.glsl`](skills/shader-art-coding/templates/noise-terrain-map.glsl).
+
 ## Verification
 
 | Check | Where | What it proves |
 |---|---|---|
 | Lint + drift | `glsl_tools.py check` | docs and tags on every function, module order, no WebGL1 or sine-hash patterns, reference snippets identical to the library |
 | glslang compile | CI (`checks.yml`) | every library module, reference snippet and template compiles as GLSL ES 3.00 |
-| WebGL2 compile | `tests/` harness | all 147 units compile under ANGLE, which also enforces WebGL-only rules |
-| GPU property tests | `tests/properties.py` | 84 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips |
+| WebGL2 compile | `tests/` harness | all 160 units compile under ANGLE, which also enforces WebGL-only rules |
+| GPU property tests | `tests/properties.py` | 85 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips |
 | Renders | harness + gallery | every template renders with no NaNs and no black frames; images saved to `gallery/` |
 | Skill effect | `evals/` (`claude plugin eval`, paid, manual) | output-rule adherence with the skill vs without it on 6 shader tasks, plus no false triggers on 3 near-miss tasks; see [evals/README.md](evals/README.md) |
 

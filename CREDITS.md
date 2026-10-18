@@ -30,6 +30,11 @@ default to CC BY-NC-SA 3.0, which is incompatible with MIT.
 | Simplex noise and its analytic gradient | Stefan Gustavson, "Simplex noise demystified" (2005); Gustavson and McEwan, "Tiling simplex noise and flow noise in two and three dimensions", JCGT 11(1), 2022 | papers; math reimplemented, the psrdnoise reference code is not used |
 | Flow noise (rotating gradients) | Perlin and Neyret, "Flow Noise", SIGGRAPH 2001 technical sketch | math |
 | Turbulence | Ken Perlin, "An Image Synthesizer", SIGGRAPH 1985 | math |
+| Gradient-noise learning reference | [Ken Perlin, improved noise](https://cs.nyu.edu/~perlin/noise/) | reference only; fixed-permutation Java code not copied |
+| Noise progression: fBm, ridges, cellular construction, domain warping | [Gonzalez Vivo and Lowe, The Book of Shaders, chapters 12](https://thebookofshaders.com/12/) and [13](https://thebookofshaders.com/13/) | explanatory sources; no source code copied |
+| External noise code catalog | [Gustavson / Ashima, webgl-noise](https://github.com/stegu/webgl-noise), [psrdnoise](https://github.com/stegu/psrdnoise), [Auburn, FastNoise Lite](https://github.com/Auburn/FastNoiseLite) | MIT alternatives linked in the use-case guide; not vendored |
+| Billow terminology | [libnoise Billow documentation](https://libnoise.sourceforge.net/docs/classnoise_1_1module_1_1Billow.html) | reference only; code not copied; local weighted [0,1] billow differs |
+| Hybrid terrain height and designed river composition | this repository, `hybridTerrainHeight` / `noise-terrain-map.glsl` | original MIT composition; not a claim to implement Musgrave's hybrid multifractal or hydrological erosion |
 | Sum-of-sines water with sharpened crests, deep-water dispersion | Mark Finch, "Effective Water Simulation from Physical Models", GPU Gems (2004), chapter 1 | math |
 | Filtering vanished normal detail into roughness | Toksvig, "Mipmapping Normal Maps" (2005); Olano and Baker, "LEAN Mapping" (I3D 2010) | math |
 | Four-arc (Moss) egg | classical compass construction | geometry |
