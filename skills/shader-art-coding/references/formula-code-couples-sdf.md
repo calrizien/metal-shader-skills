@@ -333,8 +333,8 @@ GLSL:
 
 ```glsl
 mat2 rot2(float a) {
-    float c = cos(a), s = sin(a);
-    return mat2(c, s, -s, c);
+    vec2 cs = normalize(vec2(cos(a), sin(a)));
+    return mat2(cs.x, cs.y, -cs.y, cs.x);
 }
 
 float posedEllipsoid(vec3 p, vec3 c, vec3 r, float yaw) {

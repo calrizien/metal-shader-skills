@@ -39,7 +39,7 @@ common: constants, rotation, remapping and shaping functions. Target: GLSL ES 3.
 - `const float TAU = 6.28318530717959;`
 - `float saturate(float x)` / `vec3 saturate(vec3 x)` - Clamp to [0,1]. *Use: masks, weights, colors.*
 - `float dot2(vec2 v)` / `float dot2(vec3 v)` - Squared length. *Use: cheap distance comparisons, SDF internals.*
-- `mat2 rot2(float a)` - 2D rotation matrix. `rot2(a) * v` rotates v counter-clockwise by a radians. *Use: spinning parts, posing limbs, rotating octaves, camera roll.*
+- `mat2 rot2(float a)` - 2D rotation matrix. `rot2(a) * v` rotates v counter-clockwise by a radians. (cos, sin) is renormalized because GLSL ES leaves trig precision undefined: on SwiftShader and some mobile GPUs a raw cos/sin pair is far enough from unit length that rotations stop preserving distances. *Use: spinning parts, posing limbs, rotating octaves, camera roll.*
 - `float remap(float x, float a, float b, float c, float d)` - Linear remap of x from [a,b] to [c,d] (unclamped). *Use: converting ranges, rescaling noise.*
 - `float linearstep(float a, float b, float x)` - Linear ramp from 0 at a to 1 at b, clamped. *Use: masks whose falloff should not ease in or out.*
 - `float cubicPulse(float c, float w, float x)` - Smooth bump: 1 at x == c, falling to 0 at |x - c| >= w (cubic). *Use: stripes, rings, highlights at one height, pulses in time.*

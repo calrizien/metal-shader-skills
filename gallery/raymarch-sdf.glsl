@@ -11,10 +11,10 @@
 // ---- shader-skills library: common ----
 const float PI  = 3.14159265358979;
 const float TAU = 6.28318530717959;
-// 2D rotation matrix. `rot2(a) * v` rotates v counter-clockwise by a radians.
+// 2D rotation matrix. `rot2(a) * v` rotates v counter-clockwise by a radians. (cos, sin) is renormalized because GLSL ES leaves trig precision undefined: on SwiftShader and some mobile GPUs a raw cos/sin pair is far enough from unit length that rotations stop preserving distances.
 mat2 rot2(float a) {
-    float c = cos(a), s = sin(a);
-    return mat2(c, s, -s, c);
+    vec2 cs = normalize(vec2(cos(a), sin(a)));
+    return mat2(cs.x, cs.y, -cs.y, cs.x);
 }
 
 // ---- shader-skills library: hash ----

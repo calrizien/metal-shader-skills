@@ -15,10 +15,12 @@ float dot2(vec2 v) { return dot(v, v); }
 float dot2(vec3 v) { return dot(v, v); }
 
 /// 2D rotation matrix. `rot2(a) * v` rotates v counter-clockwise by a radians.
+/// (cos, sin) is renormalized because GLSL ES leaves trig precision undefined: on SwiftShader and some mobile
+/// GPUs a raw cos/sin pair is far enough from unit length that rotations stop preserving distances.
 /// @use spinning parts, posing limbs, rotating octaves, camera roll
 mat2 rot2(float a) {
-    float c = cos(a), s = sin(a);
-    return mat2(c, s, -s, c);
+    vec2 cs = normalize(vec2(cos(a), sin(a)));
+    return mat2(cs.x, cs.y, -cs.y, cs.x);
 }
 
 /// Linear remap of x from [a,b] to [c,d] (unclamped).
