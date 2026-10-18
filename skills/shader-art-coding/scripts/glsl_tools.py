@@ -318,8 +318,10 @@ SHADER_RULES = [
     (r"\biGlobalTime\b", "error", "iGlobalTime was removed from Shadertoy; use iTime"),
     (r"\biDebugMode\b", "error", "iDebugMode is not a Shadertoy uniform; use '#define DEBUG_MODE 0'"),
     (r"^\s*#version\b", "error", "do not add #version; Shadertoy (and the bundler's prelude) provide it"),
-    (r"fract\s*\(\s*sin\s*\(", "warning",
-     "sine-based hash: platform-dependent and degrades at large inputs; use hash12/hash22 from glsl/hash.glsl"),
+    # fract(sin(..)), fract(1e4 * sin(..)), and the 43758.5453 constant wherever the multiply happens
+    (r"\bfract\s*\(\s*[-+]?\s*(?:[\d.]+(?:[eE][-+]?\d+)?\s*\*\s*)?sin\s*\(|43758\.5453", "error",
+     "sine hash: its pattern differs across GPUs and degrades at large inputs; use hash12/hash22/hash33 from "
+     "glsl/hash.glsl, also when porting (value noise keeps its look)"),
     (r"\bround\s*\(", "warning", "round() is implementation-defined at .5 and may return -0.0; prefer floor(x + 0.5)"),
 ]
 

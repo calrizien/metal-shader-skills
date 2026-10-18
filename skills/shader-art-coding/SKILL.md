@@ -61,7 +61,9 @@ Run the scripts from this skill's directory. They need only Python 3.
 - No `#version` line, no custom uniforms, no `gl_FragColor` / `texture2D` / `iGlobalTime`.
 - No `?:` on structs. Use `vec2(distance, id)` or `if`.
 - Write float literals: `2.0 * PI`, `clamp(x, 0.0, 1.0)`.
-- No `fract(sin(...) * 43758.5453)` hashes. Use `hash12` / `hash22` / `hash33` (integer PCG).
+- No `fract(sin(...) * 43758.5453)` hashes. Use `hash12` / `hash22` / `hash33` (integer PCG). Replace them even
+  when porting with "keep the look": the sine hash's exact pattern already differs between GPUs, and a PCG hash on
+  the same integer cell ids gives the noise the same look. `check` reports a sine hash as an error.
 - Guard NaN sources: `atan(0, 0)`, `pow` of negatives, `sqrt` of negatives, `normalize(vec3(0))`.
 - Keep `dFdx` / `fwidth` out of non-uniform branches and loops, or use an explicit pixel size.
 
