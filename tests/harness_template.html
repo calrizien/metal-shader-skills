@@ -131,7 +131,7 @@ async function main() {
     const url = canvas.toDataURL('image/png');
     const fig = document.createElement('figure'); fig.innerHTML = `<img src="${url}"><figcaption>${r.name} · ${ms.toFixed(0)} ms · mean ${stats.mean.toFixed(3)}</figcaption>`;
     div.appendChild(fig);
-    if (DATA.save) await fetch('/save?path=gallery/' + r.name + '.png', { method: 'POST', body: url });
+    if (DATA.save && !r.diagnostic) await fetch('/save?path=gallery/' + r.name + '.png', { method: 'POST', body: url });
     results.renders.push({ name: r.name, ok, stats });
     line(ok ? 'ok' : 'bad', `${ok ? 'PASS' : 'FAIL'} ${r.name}  nan=${stats.nanPct.toFixed(2)}% black=${stats.blackPct.toFixed(1)}% mean=${stats.mean.toFixed(3)} >1=${stats.overPct.toFixed(2)}%`);
     await sleep();
