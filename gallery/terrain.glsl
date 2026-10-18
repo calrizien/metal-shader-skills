@@ -54,6 +54,7 @@ vec2 quinticFade(vec2 f) { return f * f * f * (f * (f * 6.0 - 15.0) + 10.0); }
 vec3 quinticFade(vec3 f) { return f * f * f * (f * (f * 6.0 - 15.0) + 10.0); }
 // Derivative of quinticFade: 30 t^2 (t - 1)^2.
 vec2 quinticFadeDeriv(vec2 f) { return 30.0 * f * f * (f * (f - 2.0) + 1.0); }
+vec3 quinticFadeDeriv(vec3 f) { return 30.0 * f * f * (f * (f - 2.0) + 1.0); }
 // Unit gradient for a 2D lattice point.
 vec2 latticeGradient(vec2 cell) {
     float a = TAU * hash12(cell);
@@ -92,6 +93,44 @@ float gradientNoise(vec3 p) {
                    mix(latticeGradDot(i, vec3(0, 1, 0), f), latticeGradDot(i, vec3(1, 1, 0), f), u.x), u.y),
                mix(mix(latticeGradDot(i, vec3(0, 0, 1), f), latticeGradDot(i, vec3(1, 0, 1), f), u.x),
                    mix(latticeGradDot(i, vec3(0, 1, 1), f), latticeGradDot(i, vec3(1, 1, 1), f), u.x), u.y), u.z);
+}
+// 3D gradient noise with analytic derivatives. Returns vec4(value, d/dx, d/dy, d/dz); value equals gradientNoise(p). The trilinear blend is expanded as a polynomial in the fade weights, so the gradient is the same blend of the corner gradients plus the chain-rule term of the fade.
+vec4 gradientNoiseD(vec3 p) {
+    vec3 i = floor(p), f = fract(p);
+    vec3 u = quinticFade(f), du = quinticFadeDeriv(f);
+    vec3 g000 = hash33(i) * 2.0 - 1.0;
+    vec3 g100 = hash33(i + vec3(1, 0, 0)) * 2.0 - 1.0;
+    vec3 g010 = hash33(i + vec3(0, 1, 0)) * 2.0 - 1.0;
+    vec3 g110 = hash33(i + vec3(1, 1, 0)) * 2.0 - 1.0;
+    vec3 g001 = hash33(i + vec3(0, 0, 1)) * 2.0 - 1.0;
+    vec3 g101 = hash33(i + vec3(1, 0, 1)) * 2.0 - 1.0;
+    vec3 g011 = hash33(i + vec3(0, 1, 1)) * 2.0 - 1.0;
+    vec3 g111 = hash33(i + vec3(1, 1, 1)) * 2.0 - 1.0;
+    float v000 = dot(g000, f);
+    float v100 = dot(g100, f - vec3(1, 0, 0));
+    float v010 = dot(g010, f - vec3(0, 1, 0));
+    float v110 = dot(g110, f - vec3(1, 1, 0));
+    float v001 = dot(g001, f - vec3(0, 0, 1));
+    float v101 = dot(g101, f - vec3(1, 0, 1));
+    float v011 = dot(g011, f - vec3(0, 1, 1));
+    float v111 = dot(g111, f - vec3(1, 1, 1));
+    // value = v000 + kx u.x + ky u.y + kz u.z + kxy u.x u.y + kyz u.y u.z + kzx u.z u.x + kxyz u.x u.y u.z
+    float kx = v100 - v000, ky = v010 - v000, kz = v001 - v000;
+    float kxy = v000 - v100 - v010 + v110;
+    float kyz = v000 - v010 - v001 + v011;
+    float kzx = v000 - v100 - v001 + v101;
+    float kxyz = -v000 + v100 + v010 - v110 + v001 - v101 - v011 + v111;
+    float value = v000 + kx * u.x + ky * u.y + kz * u.z
+                + kxy * u.x * u.y + kyz * u.y * u.z + kzx * u.z * u.x + kxyz * u.x * u.y * u.z;
+    vec3 grad = g000 + (g100 - g000) * u.x + (g010 - g000) * u.y + (g001 - g000) * u.z
+              + (g000 - g100 - g010 + g110) * u.x * u.y
+              + (g000 - g010 - g001 + g011) * u.y * u.z
+              + (g000 - g100 - g001 + g101) * u.z * u.x
+              + (-g000 + g100 + g010 - g110 + g001 - g101 - g011 + g111) * u.x * u.y * u.z
+              + du * vec3(kx + kxy * u.y + kzx * u.z + kxyz * u.y * u.z,
+                          ky + kxy * u.x + kyz * u.z + kxyz * u.x * u.z,
+                          kz + kyz * u.y + kzx * u.x + kxyz * u.x * u.y);
+    return vec4(value, grad);
 }
 const int FBM_MAX_OCTAVES = 12;
 // Fractional Brownian motion over 2D gradient noise. Each octave is rotated to hide lattice alignment. persistence 0.5 is the classic look (H = 1). Lower is smoother, higher is rougher.

@@ -100,18 +100,17 @@ float sdPillarField(vec3 p, float spacing) {
 ```
 
 Polar repetition has the same rule. `domPolar` is exact for shapes symmetric about their sector's center line. For
-asymmetric or varying petals, evaluate the sector and its nearer neighbor:
+asymmetric or varying petals, evaluate the sector and the neighbor p leans toward. `domPolarPair` returns both ids
+and `domPolarSector` rotates into either one:
 
 ```glsl
 float sdPetalRing(vec2 p, float n) {
-    float sector = TAU / n;
-    float a = atan(p.y, p.x);
-    float id = floor(a / sector - 0.5);                   // the two petals around angle a are id and id + 1
+    vec2 ids = domPolarPair(p, n);
     float d = 1e10;
     for (int i = 0; i < 2; i++) {
-        float k = id + float(i);
-        vec2 q = rot2(-(k + 0.5) * sector) * p;            // rotate this sector's center onto +X
-        float len = 0.5 + 0.2 * hash11(mod(k, n));         // per-petal length
+        float k = (i == 0) ? ids.x : ids.y;
+        vec2 q = domPolarSector(p, k, n);                  // this sector's center line on +X
+        float len = 0.5 + 0.2 * hash11(k);                 // per-petal length
         d = min(d, sdUnevenCapsule(vec2(q.y, q.x - 0.15), 0.08, 0.02, len));
     }
     return d;
@@ -147,10 +146,12 @@ Get as close as possible with exact operations first, then add the smallest disp
   between machines and degrades at large coordinates.
 - Use noise in tiers: low frequency for silhouette and mass, mid for material breakup, high for grain. Do not use
   the same noise for shape, color and roughness. Offset or rotate the inputs so the controls stay independent.
-- Picking a noise: `gradientNoise` / `fbm` for general use, `valueNoiseD` / `gradientNoiseD` when you need analytic
-  normals, `erodedFbm` for mountains, `ridgedFbm` for crests and veins, `warpedFbm` for marble and smoke, `voronoi`
-  for cells and stones, `voronoiBorder` for constant-width cracks and leading, `smoothVoronoi` for soft organic cells,
-  `curlNoise` for swirling flow.
+- Picking a noise: `gradientNoise` / `fbm` for general use, `simplexNoiseD` for isotropic noise with a gradient (animate
+  its rotation for flow noise that churns in place), `valueNoiseD` / `gradientNoiseD` (2D and 3D) when you need
+  analytic normals, `erodedFbm` for mountains, `ridgedFbm` for crests and veins, `turbulence` for creased fire and
+  marble veins, `billowFbm` for puffy lobes, `warpedFbm` for marble and smoke, `voronoi` for cells and stones,
+  `voronoiBorder` for constant-width cracks and leading, `smoothVoronoi` for soft organic cells, `curlNoise` (2D or
+  3D) for divergence-free swirling flow.
 - Keep coordinates bounded: float precision is about 0.001 at 1e4 and 0.008 at 1e5. Wrap long animations with `mod`.
 
 ## Shaping functions

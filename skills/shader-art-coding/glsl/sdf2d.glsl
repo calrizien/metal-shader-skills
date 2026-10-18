@@ -204,3 +204,67 @@ float sdQuadraticBezier(vec2 pos, vec2 A, vec2 B, vec2 C) {
     }
     return sqrt(res);
 }
+
+/// Pie slice (circular sector) of radius r, symmetric about +Y. sc = vec2(sin, cos) of the half-aperture, which may
+/// go up to pi (a full disk); past pi/2 the slice is concave.
+/// @exact
+/// @use pie charts, pac-man, fans, radar sweeps, pizza slices, clock wedges, 2D spotlight cones
+float sdPie(vec2 p, vec2 sc, float r) {
+    p.x = abs(p.x);
+    float toArc = length(p) - r;
+    float toEdge = length(p - sc * clamp(dot(p, sc), 0.0, r));   // straight edge from the center along sc
+    float side = sign(sc.y * p.x - sc.x * p.y);                  // +1 beyond the aperture, -1 within it
+    return max(toArc, toEdge * side);
+}
+
+/// Horseshoe: an arc of radius r over the top (half-aperture given by sc = vec2(sin, cos), as in sdArc) whose ends run on
+/// as straight legs of length legLength along the arc's tangent, stroked with half-width w and round ends.
+/// The legs must not cross the Y axis (keep legLength * |cos(aperture)| below r * sin(aperture)).
+/// @exact
+/// @use horseshoes, magnets, U-bends, arches with posts, croquet hoops, handles, headphones (2D)
+float sdHorseshoe(vec2 p, vec2 sc, float r, float legLength, float w) {
+    p.x = abs(p.x);
+    vec2 end = r * sc;
+    float leg = sdSegment(p, end, end + legLength * vec2(sc.y, -sc.x));
+    return min(sdArc(p, sc, r, 0.0), leg) - w;
+}
+
+/// Parabolic arch: the region under y = h (1 - x^2 / w^2) and above y = 0, so half-width w at the base and height h.
+/// The closest point on the curve is the largest root of a depressed cubic, solved in closed form.
+/// @exact
+/// @use arches, bridges, tunnels, domes, bullets, gothic windows, tents, fountain jets, bell curves
+float sdParabolaSegment(vec2 p, float w, float h) {
+    p.x = abs(p.x);
+    float k = h / (w * w);   // curve y = h - k x^2
+    // d/dx |p - (x, h - k x^2)|^2 = 0  <=>  x^3 + P x + Q = 0
+    float P = (1.0 - 2.0 * k * (h - p.y)) / (2.0 * k * k);
+    float Q = -p.x / (2.0 * k * k);
+    float disc = 0.25 * Q * Q + P * P * P / 27.0;
+    float x;
+    if (disc >= 0.0) {
+        float u = pow(-0.5 * Q + sqrt(disc), 1.0 / 3.0);   // Q <= 0, so no cancellation here
+        float v = -P / (3.0 * max(u, 1e-20));
+        x = -Q / max(u * u - u * v + v * v, 1e-30);         // = u + v, without cancelling u against v
+    } else {
+        float m = sqrt(-P / 3.0);
+        x = 2.0 * m * cos(acos(clamp(-Q / (2.0 * m * m * m), -1.0, 1.0)) / 3.0);   // largest of three roots
+    }
+    // Q <= 0 means the squared distance falls from x = 0 up to the root, so clamping the root to the arc is exact
+    x = clamp(x, 0.0, w);
+    float d = min(length(p - vec2(x, h - k * x * x)), length(p - vec2(min(p.x, w), 0.0)));
+    return (p.y > 0.0 && p.y < h - k * p.x * p.x) ? -d : d;
+}
+
+/// Egg built from four tangent arcs (Moss-style): a bottom half-disk of radius ra centered at the origin, a top cap of
+/// radius rb, and two side arcs of radius 2 ra joining them. rb = ra is a disk; smaller rb makes a pointier egg.
+/// Spans y from -ra to sqrt((2 ra - rb)^2 - ra^2) + rb. Needs 0 < rb <= ra.
+/// @exact
+/// @use eggs, droplets, pebbles, seeds, cartoon heads and bodies, onion domes (flip y), Easter eggs
+float sdEgg(vec2 p, float ra, float rb) {
+    p.x = abs(p.x);
+    float c = sqrt((2.0 * ra - rb) * (2.0 * ra - rb) - ra * ra);   // height of the cap center
+    if (p.y < 0.0) return length(p) - ra;
+    // past the line from the right arc's center (-ra, 0) through the cap center, the cap is nearest
+    if (ra * p.y > c * (p.x + ra)) return length(p - vec2(0.0, c)) - rb;
+    return length(p + vec2(ra, 0.0)) - 2.0 * ra;
+}

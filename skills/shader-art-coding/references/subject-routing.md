@@ -21,7 +21,8 @@ section with the formulas. The formula files use geometry-first names; this tabl
 |---|---|---|
 | flat graphic, poster, icon, logo, UI, pattern | 2D distance fields + `fillAA` | `sdf-2d-poster.glsl`, `pattern-swatches.glsl` |
 | sculpted 3D objects, characters, still lifes | SDF raymarching | `raymarch-sdf.glsl` |
-| landscape, terrain, ocean surface | heightfield march (scaled bound) | `terrain.glsl` |
+| landscape, terrain | heightfield march (scaled bound) | `terrain.glsl` |
+| sea, ocean, lake surface | heightfield trace in a wave slab + Fresnel reflection | `ocean.glsl` |
 | clouds, smoke, fog volumes, nebulae, fire | volume integration | `volumetric-clouds.glsl` |
 | texture, material swatch, wallpaper | 2D procedural pattern | `pattern-swatches.glsl` |
 
@@ -59,12 +60,12 @@ section with the formulas. The formula files use geometry-first names; this tabl
 | mountains | `erodedFbm` height, `ridgedFbm` crests, slope/altitude masks | couples-terrain 1-12, `terrain.glsl` |
 | snow | upward-facing accumulation mask (`n.y`) + altitude + noise breakup | couples-terrain 22 |
 | desert dunes | `ridgedFbm` along one axis + `warpedFbm`, low sun | couples-terrain 23 (layered ridge) |
-| ocean, lakes | `iPlane` water + `fresnelSchlick` + sky reflection, `gradientNoiseD` normals | rendering-pipeline "Lighting" |
+| ocean, lakes | `ocean.glsl`: dispersive exp-sine waves with analytic slope and curvature, `fresnelSchlick` sky reflection, GGX glint with distance roughness, curvature foam; calm lakes: `iPlane` + `simplexNoiseD` ripples | rendering-pipeline "Lighting" |
 | sky, sunset | `atmosphereSky` (physical) or `simpleSky`; `sunDisk` | rendering-pipeline "Sky, fog and aerial perspective" |
 | clouds | `volumetric-clouds.glsl`: coverage fBm, `beerPowder`, `phaseDualHG`, `volumeStep` | rendering-pipeline "Volumes" |
 | fog, mist, haze | `distanceFog`, `heightFog`, aerial perspective with horizon-clamped sky | couples-terrain 13-14 |
 | night sky, stars | per-cell `hash32` stars, `blackbody` colors, twinkle with `sin(iTime)` | `sdf-2d-poster.glsl` |
-| fire, lava, embers | `warpedFbm` / `curlNoise`, `blackbody(1200-1800 K)`, additive glow, AgX | rendering-pipeline "Volumes" |
+| fire, lava, embers | `turbulence`, `warpedFbm` / `curlNoise` (2D or 3D), `simplexNoiseD` with animated rotation for churning flow, `blackbody(1200-1800 K)`, additive glow, AgX | rendering-pipeline "Volumes" |
 | rain, snowfall | repeated streaks with `domRepeat` + per-cell `hash12` phase | sdf-library-guide "Repetition" |
 
 ## Built and manufactured things
@@ -101,6 +102,7 @@ section with the formulas. The formula files use geometry-first names; this tabl
 | poster, landscape silhouette | ridges from `fbm` lines, layered back to front, `mixOklab` sky | `sdf-2d-poster.glsl` |
 | icons, UI shapes | `sdRoundedBox` (per-corner), `sdCircle`, `strokeAA` | couples-materials 3-4 |
 | loaders, gauges, rings | `sdArc`, `opOnion`, time-driven aperture | couples-materials 25-26 |
+| charts, badges, signage | `sdPie` (pie charts, radar sweeps), `sdHorseshoe` (magnets, U-bends), `sdParabolaSegment` (arches, domes), `sdEgg` (eggs, drops, cartoon heads) | library-index (sdf2d) |
 | kaleidoscopes, mandalas | `domPolar`, `domFold`, `cosinePalette` | sdf-library-guide "Repetition" |
 | retro sunsets, synthwave | `filteredStripes`, `filteredGrid` in perspective, `tonemapNeutral` | `sdf-2d-poster.glsl` |
 | looping animation | integer-frequency `cos(TAU * t)`, `cosinePalette` with integer c | couples-materials 25 |

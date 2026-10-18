@@ -2,7 +2,7 @@
 
 A skill that teaches coding agents to write procedural GLSL shaders that compile on the first try and look
 intentional. It works with Claude Code, Codex, Cursor, Copilot, Gemini and others. It pairs a shader-craft
-workflow with a **verified GLSL building-block library**: 169 functions across 18 modules, each one compiled in
+workflow with a **verified GLSL building-block library**: 179 functions across 18 modules, each one compiled in
 WebGL2 and numerically tested on the GPU. A bundler inlines exactly the functions a shader uses, so the result
 pastes straight into Shadertoy.
 
@@ -10,8 +10,8 @@ pastes straight into Shadertoy.
 |---|---|---|
 | [![Studio still life](gallery/raymarch-sdf.png)](gallery/raymarch-sdf.glsl) | [![Eroded mountains](gallery/terrain.png)](gallery/terrain.glsl) | [![Cumulus clouds](gallery/volumetric-clouds.png)](gallery/volumetric-clouds.glsl) |
 | SDF still life: smooth blends with blended materials, PBR, soft shadows, AO, AgX | Eroded terrain under a physically based sky with aerial perspective | Volumetric cumulus: energy-conserving integration, Beer-Powder, dual-lobe phase |
-| [![Dusk poster](gallery/sdf-2d-poster.png)](gallery/sdf-2d-poster.glsl) | [![Pattern swatches](gallery/pattern-swatches.png)](gallery/pattern-swatches.glsl) | |
-| 2D distance-field poster: Oklab gradients, polar leaves, Bézier trunks | Texture-free materials: warped marble, Voronoi cracks, hex tiles, Truchet, filtered checker | |
+| [![Dusk poster](gallery/sdf-2d-poster.png)](gallery/sdf-2d-poster.glsl) | [![Pattern swatches](gallery/pattern-swatches.png)](gallery/pattern-swatches.glsl) | [![Open ocean](gallery/ocean.png)](gallery/ocean.glsl) |
+| 2D distance-field poster: Oklab gradients, polar leaves, Bézier trunks | Texture-free materials: warped marble, Voronoi cracks, hex tiles, Truchet, filtered checker | Ocean: dispersive waves with analytic curvature foam, Fresnel sky, glitter path widening with distance |
 
 Each image links to its paste-ready shader. The sources are in [`skills/shader-art-coding/templates/`](skills/shader-art-coding/templates/).
 
@@ -111,8 +111,8 @@ The full catalog with signatures, exactness and uses is
 |---|---|---|
 | Lint + drift | `glsl_tools.py check` | docs and tags on every function, module order, no WebGL1 or sine-hash patterns, reference snippets identical to the library |
 | glslang compile | CI (`checks.yml`) | every library module, reference snippet and template compiles as GLSL ES 3.00 |
-| WebGL2 compile | `tests/` harness | all 146 units compile under ANGLE, which also enforces WebGL-only rules |
-| GPU property tests | `tests/properties.py` | 68 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips |
+| WebGL2 compile | `tests/` harness | all 147 units compile under ANGLE, which also enforces WebGL-only rules |
+| GPU property tests | `tests/properties.py` | 84 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips |
 | Renders | harness + gallery | every template renders with no NaNs and no black frames; images saved to `gallery/` |
 
 Run it locally: `python3 tests/build_harness.py && python3 tests/serve.py`, then open

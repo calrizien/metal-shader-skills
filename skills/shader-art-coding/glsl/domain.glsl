@@ -49,6 +49,24 @@ float domPolarId(vec2 p, float n) {
     return mod(floor(atan(p.y, p.x) / sector + 0.5), n);
 }
 
+/// Neighbor-checked polar repetition: ids (in [0, n)) of the sector holding p and of the adjacent sector p leans
+/// toward. Evaluate the shape in both with domPolarSector and take the min. Use it when sectors vary (per-id length,
+/// tilt, color) or are asymmetric. It covers shapes of similar size that stay inside their own sector; a shape that
+/// reaches across its neighbor needs a wider search.
+/// @use varied petals, tilted fan blades, gear teeth of mixed sizes, uneven clock marks, radial crowds
+vec2 domPolarPair(vec2 p, float n) {
+    if (dot(p, p) < 1e-20) return vec2(0.0, 1.0);
+    float sector = TAU / n;
+    float a = atan(p.y, p.x) / sector;
+    float id = floor(a + 0.5);
+    return mod(vec2(id, id + ((a >= id) ? 1.0 : -1.0)), n);
+}
+
+/// Rotate p into the frame of polar sector id (its center line on +X). domPolarSector(p, domPolarId(p, n), n)
+/// equals domPolar(p, n).
+/// @use the second half of domPolarPair: evaluate a sector's shape by id
+vec2 domPolarSector(vec2 p, float id, float n) { return rot2(-id * TAU / n) * p; }
+
 /// Fold space across the plane through the origin with unit normal n. Points behind the plane are reflected.
 /// @use kaleidoscopes, symmetric creatures, KIFS fractals, mirrored architecture
 vec3 domFold(vec3 p, vec3 n) { return p - 2.0 * min(dot(p, n), 0.0) * n; }

@@ -27,3 +27,9 @@ default to CC BY-NC-SA 3.0, which is incompatible with MIT.
 | Beer-Powder cloud lighting, dual-lobe phase | Andrew Schneider, Horizon Zero Dawn clouds (SIGGRAPH 2015) | math |
 | Sun limb darkening | Neckel 1996 | constants are facts |
 | Cornette-Shanks phase function | Cornette and Shanks 1992 | math |
+| Simplex noise and its analytic gradient | Stefan Gustavson, "Simplex noise demystified" (2005); Gustavson and McEwan, "Tiling simplex noise and flow noise in two and three dimensions", JCGT 11(1), 2022 | papers; math reimplemented, the psrdnoise reference code is not used |
+| Flow noise (rotating gradients) | Perlin and Neyret, "Flow Noise", SIGGRAPH 2001 technical sketch | math |
+| Turbulence | Ken Perlin, "An Image Synthesizer", SIGGRAPH 1985 | math |
+| Sum-of-sines water with sharpened crests, deep-water dispersion | Mark Finch, "Effective Water Simulation from Physical Models", GPU Gems (2004), chapter 1 | math |
+| Filtering vanished normal detail into roughness | Toksvig, "Mipmapping Normal Maps" (2005); Olano and Baker, "LEAN Mapping" (I3D 2010) | math |
+| Four-arc (Moss) egg | classical compass construction | geometry |

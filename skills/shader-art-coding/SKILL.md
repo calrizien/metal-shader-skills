@@ -83,7 +83,8 @@ Read only what the task needs:
 | `references/formula-code-couples-materials.md` | masks, palettes, lighting terms, polish, motion |
 
 Templates in `templates/` are complete, render-verified starting points (gallery in the repository README):
-`raymarch-sdf.glsl`, `terrain.glsl`, `volumetric-clouds.glsl`, `sdf-2d-poster.glsl`, `pattern-swatches.glsl`.
+`raymarch-sdf.glsl`, `terrain.glsl`, `ocean.glsl`, `volumetric-clouds.glsl`, `sdf-2d-poster.glsl`,
+`pattern-swatches.glsl`.
 
 ## Output expectations
 

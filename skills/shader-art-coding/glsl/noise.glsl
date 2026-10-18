@@ -1,4 +1,5 @@
-//! noise: value and gradient noise (2D/3D, analytic derivatives), fBm, domain warping, Voronoi, tilings, dithering.
+//! noise: value, gradient and simplex noise (2D/3D, analytic derivatives), fBm, turbulence and billow, domain warping,
+//! curl flow, Voronoi, dithering.
 //! Every function here is texture-free and original. The math follows the cited articles.
 //! Ranges are approximate unless stated. Noise built on integer hashes stays stable at large coordinates
 //! until float precision runs out (|p| around 1e5). Re-center long animations with mod/fract on time.
@@ -11,6 +12,7 @@ vec3 quinticFade(vec3 f) { return f * f * f * (f * (f * 6.0 - 15.0) + 10.0); }
 /// Derivative of quinticFade: 30 t^2 (t - 1)^2.
 /// @use analytic noise derivatives
 vec2 quinticFadeDeriv(vec2 f) { return 30.0 * f * f * (f * (f - 2.0) + 1.0); }
+vec3 quinticFadeDeriv(vec3 f) { return 30.0 * f * f * (f * (f - 2.0) + 1.0); }
 
 /// 2D value noise with analytic derivatives. Returns vec3(value, d/dx, d/dy).
 /// @use terrain base layers, cheap clouds, anything needing normals without finite differences
@@ -79,6 +81,41 @@ vec3 gradientNoiseD(vec2 p) {
 /// @range about [-0.7,0.7]
 float gradientNoise(vec2 p) { return gradientNoiseD(p).x; }
 
+/// 2D simplex noise with analytic gradient. Returns vec3(value, d/dx, d/dy).
+/// Sums three radial kernels (0.5 - r^2)^4 on a triangular lattice instead of blending four square-cell corners, so it
+/// has fewer axis-aligned artifacts than gradientNoise. rotation (radians) spins every lattice gradient: animating it
+/// gives flow noise that churns in place instead of sliding (Perlin and Neyret 2001). Scaled so |value| <= 1 exactly.
+/// @use flowing water and lava (animate rotation), ripples with analytic normals, isotropic fBm, swirling fields
+/// @range value in [-1,1]
+/// @see Gustavson, "Simplex noise demystified" (2005); Gustavson and McEwan, JCGT 11(1), 2022 (psrdnoise)
+vec3 simplexNoiseD(vec2 p, float rotation) {
+    const float SKEW = 0.36602540378;     // (sqrt(3) - 1) / 2: square lattice -> triangle lattice
+    const float UNSKEW = 0.21132486541;   // (3 - sqrt(3)) / 6
+    vec2 cell = floor(p + (p.x + p.y) * SKEW);
+    vec2 d0 = p - cell + (cell.x + cell.y) * UNSKEW;
+    vec2 o = (d0.x > d0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);   // which of the cell's two triangles holds p
+    vec2 corners[3] = vec2[3](cell, cell + o, cell + 1.0);
+    vec2 offsets[3] = vec2[3](d0, d0 - o + UNSKEW, d0 - 1.0 + 2.0 * UNSKEW);
+    mat2 spin = rot2(rotation);
+    vec3 sum = vec3(0.0);
+    for (int k = 0; k < 3; k++) {
+        vec2 d = offsets[k];
+        float t = max(0.5 - dot(d, d), 0.0);
+        vec2 g = spin * latticeGradient(corners[k]);
+        float gd = dot(g, d);
+        float t3 = t * t * t;
+        // value t^4 (g.d); gradient t^4 g - 8 t^3 (g.d) d
+        sum += vec3(t3 * t * gd, t3 * t * g - 8.0 * t3 * gd * d);
+    }
+    return 99.2 * sum;   // 1 / max over the simplex of sum t^4 |d|
+}
+vec3 simplexNoiseD(vec2 p) { return simplexNoiseD(p, 0.0); }
+
+/// 2D simplex noise.
+/// @use isotropic smooth noise, fBm layers without grid alignment
+/// @range [-1,1]
+float simplexNoise(vec2 p) { return simplexNoiseD(p, 0.0).x; }
+
 /// Dot product of a hashed 3D gradient with the offset to its lattice corner.
 float latticeGradDot(vec3 cell, vec3 corner, vec3 f) {
     vec3 g = hash33(cell + corner) * 2.0 - 1.0;
@@ -96,6 +133,50 @@ float gradientNoise(vec3 p) {
                    mix(latticeGradDot(i, vec3(0, 1, 0), f), latticeGradDot(i, vec3(1, 1, 0), f), u.x), u.y),
                mix(mix(latticeGradDot(i, vec3(0, 0, 1), f), latticeGradDot(i, vec3(1, 0, 1), f), u.x),
                    mix(latticeGradDot(i, vec3(0, 1, 1), f), latticeGradDot(i, vec3(1, 1, 1), f), u.x), u.y), u.z);
+}
+
+/// 3D gradient noise with analytic derivatives. Returns vec4(value, d/dx, d/dy, d/dz); value equals gradientNoise(p).
+/// The trilinear blend is expanded as a polynomial in the fade weights, so the gradient is the same blend of the corner
+/// gradients plus the chain-rule term of the fade.
+/// @use normals of noise-displaced surfaces without extra samples, 3D curl flow, slope-aware 3D fBm, lit nebulae
+/// @range value in about [-1,1]
+/// @see https://iquilezles.org/articles/gradientnoise/
+vec4 gradientNoiseD(vec3 p) {
+    vec3 i = floor(p), f = fract(p);
+    vec3 u = quinticFade(f), du = quinticFadeDeriv(f);
+    vec3 g000 = hash33(i) * 2.0 - 1.0;
+    vec3 g100 = hash33(i + vec3(1, 0, 0)) * 2.0 - 1.0;
+    vec3 g010 = hash33(i + vec3(0, 1, 0)) * 2.0 - 1.0;
+    vec3 g110 = hash33(i + vec3(1, 1, 0)) * 2.0 - 1.0;
+    vec3 g001 = hash33(i + vec3(0, 0, 1)) * 2.0 - 1.0;
+    vec3 g101 = hash33(i + vec3(1, 0, 1)) * 2.0 - 1.0;
+    vec3 g011 = hash33(i + vec3(0, 1, 1)) * 2.0 - 1.0;
+    vec3 g111 = hash33(i + vec3(1, 1, 1)) * 2.0 - 1.0;
+    float v000 = dot(g000, f);
+    float v100 = dot(g100, f - vec3(1, 0, 0));
+    float v010 = dot(g010, f - vec3(0, 1, 0));
+    float v110 = dot(g110, f - vec3(1, 1, 0));
+    float v001 = dot(g001, f - vec3(0, 0, 1));
+    float v101 = dot(g101, f - vec3(1, 0, 1));
+    float v011 = dot(g011, f - vec3(0, 1, 1));
+    float v111 = dot(g111, f - vec3(1, 1, 1));
+    // value = v000 + kx u.x + ky u.y + kz u.z + kxy u.x u.y + kyz u.y u.z + kzx u.z u.x + kxyz u.x u.y u.z
+    float kx = v100 - v000, ky = v010 - v000, kz = v001 - v000;
+    float kxy = v000 - v100 - v010 + v110;
+    float kyz = v000 - v010 - v001 + v011;
+    float kzx = v000 - v100 - v001 + v101;
+    float kxyz = -v000 + v100 + v010 - v110 + v001 - v101 - v011 + v111;
+    float value = v000 + kx * u.x + ky * u.y + kz * u.z
+                + kxy * u.x * u.y + kyz * u.y * u.z + kzx * u.z * u.x + kxyz * u.x * u.y * u.z;
+    vec3 grad = g000 + (g100 - g000) * u.x + (g010 - g000) * u.y + (g001 - g000) * u.z
+              + (g000 - g100 - g010 + g110) * u.x * u.y
+              + (g000 - g010 - g001 + g011) * u.y * u.z
+              + (g000 - g100 - g001 + g101) * u.z * u.x
+              + (-g000 + g100 + g010 - g110 + g001 - g101 - g011 + g111) * u.x * u.y * u.z
+              + du * vec3(kx + kxy * u.y + kzx * u.z + kxyz * u.y * u.z,
+                          ky + kxy * u.x + kyz * u.z + kxyz * u.x * u.z,
+                          kz + kyz * u.y + kzx * u.x + kxyz * u.x * u.y);
+    return vec4(value, grad);
 }
 
 const int FBM_MAX_OCTAVES = 12;
@@ -181,6 +262,74 @@ float ridgedFbm(vec2 p, int octaves) {
     return sum / norm;
 }
 
+/// Perlin's turbulence: fBm of |noise|. The absolute value folds every zero crossing into a sharp crease, at every scale.
+/// @use fire, marble veins (sin(x + k * turbulence)), smoke wisps, electric glow, lava cracks, wind-torn clouds
+/// @range [0,1]
+/// @see Perlin, "An Image Synthesizer", SIGGRAPH 1985
+float turbulence(vec2 p, int octaves) {
+    const mat2 octaveRotation = mat2(0.8, 0.6, -0.6, 0.8);
+    float sum = 0.0, amp = 1.0, norm = 0.0;
+    for (int i = 0; i < FBM_MAX_OCTAVES; i++) {
+        if (i >= octaves) break;
+        sum += amp * abs(gradientNoise(p));
+        norm += amp;
+        amp *= 0.5;
+        p = 2.01 * (octaveRotation * p) + vec2(17.13, -3.71);
+    }
+    return 1.4 * sum / norm;   // |2D gradient noise| <= sqrt(2)/2
+}
+float turbulence(vec3 p, int octaves) {
+    const mat3 octaveRotation = mat3(0.00, 0.80, 0.60,
+                                     -0.80, 0.36, -0.48,
+                                     -0.60, -0.48, 0.64);
+    float sum = 0.0, amp = 1.0, norm = 0.0;
+    for (int i = 0; i < FBM_MAX_OCTAVES; i++) {
+        if (i >= octaves) break;
+        sum += amp * min(abs(gradientNoise(p)), 1.0);
+        norm += amp;
+        amp *= 0.5;
+        p = 2.01 * (octaveRotation * p) + vec3(17.13, -3.71, 5.29);
+    }
+    return sum / norm;
+}
+
+/// Billowy multifractal: |noise| per octave makes puffy rounded lobes split by sharp creases (the inverse of ridgedFbm).
+/// Each octave is weighted by the previous one, so detail gathers on the lobes while the creases stay clean.
+/// @use cumulus and cauliflower tops, puffy smoke, foam clumps, rock piles, cotton, popcorn-like bumps
+/// @range [0,1]
+float billowFbm(vec2 p, int octaves) {
+    const mat2 octaveRotation = mat2(0.8, 0.6, -0.6, 0.8);
+    float sum = 0.0, amp = 0.5, weight = 1.0, norm = 0.0;
+    for (int i = 0; i < FBM_MAX_OCTAVES; i++) {
+        if (i >= octaves) break;
+        float n = abs(gradientNoise(p) * 1.4);
+        n = n * (2.0 - n);   // round the lobe tops, keep the creases sharp
+        sum += amp * n * weight;
+        norm += amp;
+        weight = clamp(n * 1.5, 0.0, 1.0);
+        amp *= 0.5;
+        p = 2.01 * (octaveRotation * p) + vec2(17.13, -3.71);
+    }
+    return sum / norm;
+}
+float billowFbm(vec3 p, int octaves) {
+    const mat3 octaveRotation = mat3(0.00, 0.80, 0.60,
+                                     -0.80, 0.36, -0.48,
+                                     -0.60, -0.48, 0.64);
+    float sum = 0.0, amp = 0.5, weight = 1.0, norm = 0.0;
+    for (int i = 0; i < FBM_MAX_OCTAVES; i++) {
+        if (i >= octaves) break;
+        float n = min(abs(gradientNoise(p)) * 1.4, 1.0);
+        n = n * (2.0 - n);
+        sum += amp * n * weight;
+        norm += amp;
+        weight = clamp(n * 1.5, 0.0, 1.0);
+        amp *= 0.5;
+        p = 2.01 * (octaveRotation * p) + vec3(17.13, -3.71, 5.29);
+    }
+    return sum / norm;
+}
+
 /// Two-level domain warp f(p + s*r), r = fbm(p + s*q), q = fbm(p). Writes the intermediate warp
 /// vectors so they can drive color. Cost is 5 fBm calls.
 /// @use marble, smoke, agate, alien skies, painterly backgrounds
@@ -199,6 +348,17 @@ float warpedFbm(vec2 p, float strength, int octaves, out vec2 q, out vec2 r) {
 vec2 curlNoise(vec2 p) {
     vec3 n = gradientNoiseD(p);
     return vec2(n.z, -n.y);
+}
+
+/// Divergence-free 3D flow field: the curl of a vector potential whose components are three decorrelated
+/// gradientNoiseD fields. Analytic, so it costs three noise evaluations and no finite differences.
+/// @use smoke and fire advection, swirling particles and sparks, wisps, 3D flow-aligned strokes, magic trails
+/// @see Bridson, Hourihan and Nordenstam, "Curl-Noise for Procedural Fluid Flow", SIGGRAPH 2007
+vec3 curlNoise(vec3 p) {
+    vec3 a = gradientNoiseD(p).yzw;                                   // grad of potential.x
+    vec3 b = gradientNoiseD(p + vec3(31.416, -47.853, 12.793)).yzw;   // grad of potential.y
+    vec3 c = gradientNoiseD(p + vec3(-23.719, 18.274, -56.183)).yzw;  // grad of potential.z
+    return vec3(c.y - b.z, a.z - c.x, b.x - a.y);
 }
 
 /// Cellular (Worley/Voronoi) noise. Returns vec4(F1, F2, nearestCell.xy).

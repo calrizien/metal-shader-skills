@@ -76,13 +76,52 @@ SDF2 = [
     ("sdQuadraticBezier 2D straight", "sdQuadraticBezier(p, vec2(-0.6, -0.3), vec2(0.0, 0.0), vec2(0.6, 0.3)) - 0.05", 1.2, ["0,0"], ["0,0.3"]),
     ("hexEdgeDistance", "-hexEdgeDistance(hexGrid(p * 3.0).xy) / 3.0", 1.2, [], []),
     ("truchetArcs", "truchetArcs(p * 3.0, 0.1) / 3.0", 1.2, [], []),
+    ("sdPie", "sdPie(p, vec2(sin(0.9), cos(0.9)), 0.7)", 1.2, ["0,0.3", "0.3,0.4"], ["0,-0.1", "0,0.75", "0.6,0"]),
+    ("sdPie concave", "sdPie(p, vec2(sin(2.4), cos(2.4)), 0.7)", 1.2, ["0,0.3", "0.5,0", "0.3,-0.2"], ["0,-0.3", "0,0.75"]),
+    ("sdHorseshoe", "sdHorseshoe(p, vec2(sin(2.0), cos(2.0)), 0.5, 0.3, 0.08)", 1.2, ["0,0.5", "0.39,-0.345"],
+     ["0,0", "0,-0.5", "0,0.65"]),
+    ("sdParabolaSegment", "sdParabolaSegment(p, 0.7, 0.9)", 1.2, ["0,0.1", "0,0.85", "0.5,0.2"], ["0,-0.05", "0,0.95", "0.65,0.3"]),
+    ("sdParabolaSegment flat", "sdParabolaSegment(p, 0.9, 0.25)", 1.2, ["0,0.1", "0.6,0.1"], ["0,0.3", "0,-0.1", "0.85,0.05"]),
+    ("sdParabolaSegment tall", "sdParabolaSegment(p, 0.3, 1.0)", 1.2, ["0,0.5", "0.1,0.8"], ["0.25,0.5", "0,1.05"]),
+    ("sdParabolaSegment boundary", "abs(sdParabolaSegment(p, 0.7, 0.9))", 1.2, [], []),
+    ("sdParabolaSegment tall boundary", "abs(sdParabolaSegment(p, 0.3, 1.0))", 1.2, [], []),
+    ("sdEgg", "sdEgg(p, 0.5, 0.2)", 1.2, ["0,0", "0,0.75", "0.45,0"], ["0,-0.55", "0,0.85", "0.52,0", "0.45,0.5"]),
+    ("sdEgg pointed", "sdEgg(p, 0.5, 0.02)", 1.2, ["0,0.8", "0,-0.45"], ["0,0.9", "0.2,0.8"]),
+    ("sdEgg boundary", "abs(sdEgg(p, 0.5, 0.2))", 1.2, [], []),
 ]
+
+
+def _parabola_boundary(w: float, h: float) -> str:
+    """Closed boundary of sdParabolaSegment(p, w, h): the arc for t < 0.8 (denser, it is longer), then the base."""
+    x = f"mix({-w}, {w}, t / 0.8)"
+    return (f"t < 0.8 ? vec2({x}, {h} - {h / (w * w):.6f} * {x} * {x}) "
+            f": vec2(mix({-w}, {w}, (t - 0.8) / 0.2), 0.0)")
+
+
+def _egg_boundary(ra: float, rb: float) -> str:
+    """Closed boundary of sdEgg(p, ra, rb): bottom arc, side arc, cap on the right half (split by arc length),
+    mirrored for t >= 0.5."""
+    import math
+    c = math.sqrt((2 * ra - rb) ** 2 - ra * ra)
+    th = math.atan2(c, ra)
+    lens = [ra * math.pi / 2, 2 * ra * th, rb * (math.pi / 2 - th)]
+    s1, s2 = lens[0] / sum(lens), (lens[0] + lens[1]) / sum(lens)
+    s = "fract(2.0 * t)"
+    arc = lambda cx, cy, r, a0, a1, lo, hi: (
+        f"vec2({cx}, {cy:.7f}) + {r} * vec2(cos({a0:.7f} + {a1 - a0:.7f} * ({s} - {lo:.6f}) / {hi - lo:.6f}), "
+        f"sin({a0:.7f} + {a1 - a0:.7f} * ({s} - {lo:.6f}) / {hi - lo:.6f}))")
+    return (f"vec2(t < 0.5 ? 1.0 : -1.0, 1.0) * ({s} < {s1:.6f} ? {arc(0.0, 0.0, ra, -math.pi / 2, 0.0, 0.0, s1)} "
+            f": {s} < {s2:.6f} ? {arc(-ra, 0.0, 2 * ra, 0.0, th, s1, s2)} "
+            f": {arc(0.0, c, rb, th, math.pi / 2, s2, 1.0)})")
 
 # Curves checked against brute-force sampling (bit 8): name -> (expr of p, point on curve at parameter t).
 BRUTE = {
     "sdQuadraticBezier 2D": ("vec2", "mix(mix(vec2(-0.7, -0.3), vec2(0.0, 0.9), t), mix(vec2(0.0, 0.9), vec2(0.6, -0.4), t), t)", 0.05),
     "sdQuadraticBezier 2D straight": ("vec2", "mix(vec2(-0.6, -0.3), vec2(0.6, 0.3), t)", 0.05),
     "sdQuadraticBezier 3D": ("vec3", "mix(mix(vec3(-0.6, -0.3, 0.1), vec3(0.0, 0.9, -0.3), t), mix(vec3(0.0, 0.9, -0.3), vec3(0.6, -0.2, 0.2), t), t)", 0.1),
+    "sdParabolaSegment boundary": ("vec2", _parabola_boundary(0.7, 0.9), 0.0),
+    "sdParabolaSegment tall boundary": ("vec2", _parabola_boundary(0.3, 1.0), 0.0),
+    "sdEgg boundary": ("vec2", _egg_boundary(0.5, 0.2), 0.0),
 }
 
 # Allowed failure rates for the exactness bit (medial-axis noise). Everything else must be 0.
@@ -127,6 +166,53 @@ PROPERTIES = [
         float div = (curlNoise(p + vec2(e, 0.0)).x - curlNoise(p - vec2(e, 0.0)).x
                    + curlNoise(p + vec2(0.0, e)).y - curlNoise(p - vec2(0.0, e)).y) / (2.0 * e);
         return abs(div) > 0.05 ? 1 : 0;""", {}),
+    ("simplexNoiseD derivative matches finite difference, |value| <= 1", """
+        vec2 p = (a.xy - 0.5) * 40.0;
+        float rot = TAU * b.x;
+        vec3 n = simplexNoiseD(p, rot);
+        float e = 1e-3;
+        vec2 fd = vec2(simplexNoiseD(p + vec2(e, 0.0), rot).x - simplexNoiseD(p - vec2(e, 0.0), rot).x,
+                       simplexNoiseD(p + vec2(0.0, e), rot).x - simplexNoiseD(p - vec2(0.0, e), rot).x) / (2.0 * e);
+        int f = 0;
+        if (length(n.yz - fd) > 0.02 * (1.0 + length(fd))) f |= 1;
+        if (isnan(n.x) || abs(n.x) > 1.0) f |= 2;
+        if (simplexNoise(p) != simplexNoiseD(p, 0.0).x) f |= 4;
+        return f;""", {}),
+    ("gradientNoiseD 3D matches gradientNoise and finite differences", """
+        vec3 p = (a.xyz - 0.5) * 30.0;
+        vec4 n = gradientNoiseD(p);
+        float e = 1e-3;
+        vec3 fd = vec3(gradientNoise(p + vec3(e, 0.0, 0.0)) - gradientNoise(p - vec3(e, 0.0, 0.0)),
+                       gradientNoise(p + vec3(0.0, e, 0.0)) - gradientNoise(p - vec3(0.0, e, 0.0)),
+                       gradientNoise(p + vec3(0.0, 0.0, e)) - gradientNoise(p - vec3(0.0, 0.0, e))) / (2.0 * e);
+        int f = 0;
+        if (abs(n.x - gradientNoise(p)) > 1e-5) f |= 1;
+        if (length(n.yzw - fd) > 0.02 * (1.0 + length(fd))) f |= 2;
+        return f;""", {}),
+    ("curlNoise 3D is divergence-free", """
+        vec3 p = (a.xyz - 0.5) * 20.0;
+        float e = 2e-3;
+        vec3 dx = curlNoise(p + vec3(e, 0.0, 0.0)) - curlNoise(p - vec3(e, 0.0, 0.0));
+        vec3 dy = curlNoise(p + vec3(0.0, e, 0.0)) - curlNoise(p - vec3(0.0, e, 0.0));
+        vec3 dz = curlNoise(p + vec3(0.0, 0.0, e)) - curlNoise(p - vec3(0.0, 0.0, e));
+        float div = (dx.x + dy.y + dz.z) / (2.0 * e);
+        float scale = (abs(dx.x) + abs(dy.y) + abs(dz.z)) / (2.0 * e);   // what a non-solenoidal field would show
+        vec3 c = curlNoise(p);
+        int f = 0;
+        if (abs(div) > 0.01 * scale + 0.02) f |= 1;
+        if (isnan(c.x + c.y + c.z) || length(c) > 20.0) f |= 2;
+        return f;""", {}),
+    ("turbulence and billowFbm stay in [0,1]", """
+        vec2 p = (a.xy - 0.5) * 100.0;
+        vec3 q = (b.xyz - 0.5) * 40.0;
+        float t2 = turbulence(p, 6), t3 = turbulence(q, 5);
+        float b2 = billowFbm(p, 6), b3 = billowFbm(q, 5);
+        int f = 0;
+        if (isnan(t2) || t2 < 0.0 || t2 > 1.0) f |= 1;
+        if (isnan(t3) || t3 < 0.0 || t3 > 1.0) f |= 2;
+        if (isnan(b2) || b2 < 0.0 || b2 > 1.0) f |= 4;
+        if (isnan(b3) || b3 < 0.0 || b3 > 1.0) f |= 8;
+        return f;""", {}),
     ("noise and fbm ranges", """
         vec2 p = (a.xy - 0.5) * 200.0;
         vec3 q = (a.xyz - 0.5) * 50.0;
@@ -173,6 +259,28 @@ PROPERTIES = [
         if (abs(length(domTwist(q, 2.0)) - length(q)) > 1e-4) f |= 4;
         vec2 r = domRepeat(p, vec2(0.7));
         if (any(greaterThan(abs(r), vec2(0.35 + 1e-4)))) f |= 8;
+        return f;""", {}),
+    ("domPolarPair matches a search over every sector", """
+        vec2 p = (a.xy - 0.5) * 2.4;
+        const float n = 7.0;
+        float best = 1e10;   // tilted petals of varying length, one per sector
+        for (int k = 0; k < 7; k++) {
+            vec2 q = rot2(-0.35) * (domPolarSector(p, float(k), n) - vec2(0.2, 0.0));
+            best = min(best, sdUnevenCapsule(q.yx, 0.06, 0.02, 0.3 + 0.35 * hash11(float(k))));
+        }
+        vec2 ids = domPolarPair(p, n);
+        float pair = 1e10;
+        for (int i = 0; i < 2; i++) {
+            float k = (i == 0) ? ids.x : ids.y;
+            vec2 q = rot2(-0.35) * (domPolarSector(p, k, n) - vec2(0.2, 0.0));
+            pair = min(pair, sdUnevenCapsule(q.yx, 0.06, 0.02, 0.3 + 0.35 * hash11(k)));
+        }
+        float gap = mod(ids.y - ids.x + n, n);
+        int f = 0;
+        if (abs(pair - best) > 1e-6) f |= 1;
+        if (ids.x != domPolarId(p, n)) f |= 2;
+        if (length(domPolarSector(p, ids.x, n) - domPolar(p, n)) > 1e-4) f |= 4;
+        if (gap != 1.0 && gap != n - 1.0) f |= 8;
         return f;""", {}),
     ("intersectors agree with SDFs", """
         vec3 ro = (a.xyz - 0.5) * 6.0;
