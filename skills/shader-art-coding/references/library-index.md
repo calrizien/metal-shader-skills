@@ -20,10 +20,12 @@ Tags: **exact** is a true Euclidean distance, safe for blending, AO, shadows and
 - [sdf2d](#sdf2d) - 2D signed distance primitives for posters, icons, UI, motion graphics, and as profiles for opExtrude / opRevolve
 - [operators](#operators) - combine distances (booleans, smooth blends, chamfers, stairs) and reshape them (round, onion, extrude, revolve, elongate)
 - [domain](#domain) - transform the point BEFORE evaluating a distance (repetition, mirroring, polar sectors, folds, twist, bend)
+- [architecture](#architecture) - stable building parameters and filtered facade fields
 - [raymarch](#raymarch) - sphere tracing, normals, soft shadows and ambient occlusion for SDF scenes
 - [intersect](#intersect) - analytic ray-primitive intersections
 - [camera](#camera) - look-at frames, primary rays, field of view, thin-lens depth of field
 - [shading](#shading) - BRDF terms and practical lighting models
+- [water](#water) - finite-depth wave dispersion, analytic wave derivatives, exact dielectric Fresnel and RGB attenuation
 - [color](#color) - transfer functions, perceptual color (Oklab / OkLCh), palettes, luminance, blackbody light colors
 - [tonemap](#tonemap) - map scene-linear HDR to display range
 - [volume](#volume) - participating media (fog, smoke, clouds, haze)
@@ -194,6 +196,13 @@ domain: transform the point BEFORE evaluating a distance (repetition, mirroring,
 - `vec3 domTwist(vec3 p, float k)` - Twist around Y: rotate XZ by k * y. Divide the resulting distance by L = a/2 + sqrt(1 + a*a/4), a = k * R, where R is the shape's max distance from the Y axis. Without that, the march overshoots. *Use: twisted columns, drills, licorice, DNA-like spirals, towels.*
 - `vec3 domBend(vec3 p, float k)` - Bend in XY: rotate XY by k * x. Divide the resulting distance by about 1 + k * R (R = max |p.xy| of the shape). *Use: bent beams, arches from boxes, bananas, curved horns.*
 
+## architecture
+
+architecture: stable building parameters and filtered facade fields. These are massing/material helpers, not a mesh generator or a full shape-grammar engine. Keep the generated footprint inside its parcel.
+
+- `vec4 buildingProfile(vec2 parcel, vec2 heightRange, vec2 halfWidthRange)` - Stable building profile: vec4(height, half-width, half-depth, roof style 0/1/2) from an integer parcel ID. Height and half-width ranges are ordered, positive world-space values. The same ID always gives the same profile. *Use: city blocks, towers, deterministic chunk generation, architectural massing.*
+- `float facadeWindowMask(vec2 uv, vec2 fill, vec2 footprint)` - Box-filtered rectangular windows centered on integer facade coordinates. fill is the opening fraction per cell in [0,1]; footprint is the pixel's width/height in cell units. At large footprints it converges to fill.x*fill.y. *Use: distant city facades, office windows, floor bands, architectural grids without moire.* Range [0,1].
+
 ## raymarch
 
 raymarch: sphere tracing, normals, soft shadows and ambient occlusion for SDF scenes. SCENE CONTRACT: your shader defines   vec2 map(vec3 p)   returning vec2(distance, materialId). Packing the material into a vec2 avoids structs (WebGL forbids ?: on structs) and works with every helper here. Loops start at ZERO, a zero the compiler cannot prove. That stops it inlining map() into every loop, which keeps compile times sane and avoids WebGL compiler crashes on large scenes.
@@ -238,6 +247,15 @@ shading: BRDF terms and practical lighting models. Vectors are unit length: n = 
 - `vec3 hemisphereLight(vec3 n, vec3 skyColor, vec3 groundColor)` - Hemisphere light: sky color from above blended to ground color from below. *Use: ambient fill, outdoor sky light, studio fill.*
 - `float translucency(vec3 n, vec3 v, vec3 l, float distortion, float power, float thickness)` - Fast translucency (Barre-Brisebois and Bouchard 2011): light passing through thin parts, seen from the back. distortion bends the light along the normal (0.2-0.5). thickness is 0 (thin) .. 1 (thick); see sdfThickness. *Use: leaves, ears, wax, jade, marble, backlit petals, jellyfish.*
 - `float rimLight(vec3 n, vec3 v, float power)` - Rim light from the viewing angle: strongest at silhouettes. *Use: character separation from background, fresnel-like glow, stylized outlines.*
+
+## water
+
+water: finite-depth wave dispersion, analytic wave derivatives, exact dielectric Fresnel and RGB attenuation. Units must agree: wavelength/depth/path in meters, gravity in m/s^2, extinction in 1/m. No textures or scene state.
+
+- `float waterDispersion(float k, float depth, float gravity)` - Angular frequency sqrt(g*k*tanh(k*depth)) for finite-depth gravity waves. Nonpositive inputs are clamped. *Use: shallow coasts, ocean swell, lake waves with depth-dependent speed.* Range nonnegative.
+- `vec4 waterWaveD(vec2 xz, float time, vec2 direction, float wavelength, float amplitude, float depth, float footprint)` - One sinusoidal wave: vec4(height, dh/dx, dh/dz, Laplacian). Direction is normalized internally; zero uses +X. wavelength > 0, amplitude in meters. footprint filters waves below 2-6 pixels; derivatives hold it constant. *Use: analytic water normals, layered swell/chop, curvature foam, finite-depth lake and coastal waves.*
+- `float fresnelDielectric(float cosIncident, float etaIncident, float etaTransmitted)` - Exact unpolarized dielectric Fresnel for a positive incident cosine and positive refractive indices. Returns 1 for total internal reflection. Caller chooses etaIncident/etaTransmitted for the ray's side. *Use: air-water interfaces (1.0,1.333), underwater views (1.333,1.0), glass.* Range [0,1].
+- `vec3 beerTransmittance(vec3 extinction, float pathLength)` - Beer-Lambert RGB transmittance exp(-extinction*pathLength). Negative extinction/path is clamped to zero. Use the refracted optical path, not vertical water depth. Attenuation alone does not add scattered light. *Use: depth-colored water, underwater visibility, tinted glass, homogeneous fog.* Range [0,1].
 
 ## color
 

@@ -116,6 +116,13 @@ def build(save_gallery: bool = False) -> Path:
         m = re.search(r"//\s*@render\s+time=([\d.]+)", src)
         renders.append({"name": tpl.stem, "time": float(m.group(1)) if m else 2.0,
                         "code": gt.SHADERTOY_PRELUDE + gt.bundle_source(lib, src, keep_docs=False) + gt.MAIN_COMPLETE})
+        # Explicit template presets/debug views are compiled AND rendered in CI. Keep them out of the gallery;
+        # they are diagnostic variants, not additional public examples.
+        for variant_name, variant in gt.template_variants(src):
+            name = f"{tpl.stem}--{variant_name}"
+            code = gt.SHADERTOY_PRELUDE + gt.bundle_source(lib, variant, keep_docs=False) + gt.MAIN_COMPLETE
+            renders.append({"name": name, "time": float(m.group(1)) if m else 2.0,
+                            "code": code, "diagnostic": True})
     data = {"units": units, "tests": tests, "renders": renders, "save": save_gallery,
             "lint": [str(f) for f in findings]}
     out_dir = ROOT / "build"

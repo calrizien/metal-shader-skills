@@ -2,8 +2,8 @@
 name: shader-art-coding
 description: >-
   Writes, debugs, and art-directs procedural GLSL fragment shaders (Shadertoy mainImage, WebGL2 / GLSL ES 3.00):
-  SDF raymarching, 2D distance-field graphics, noise / fBm / domain warping, heightfield terrain, clouds and other
-  volumes, PBR lighting, color and tonemapping. Ships a verified GLSL building-block library with a bundler and
+  SDF raymarching, procedural buildings/cities, 2D distance-field graphics, noise / fBm / domain warping, terrain,
+  ocean/coastal water optics, clouds and other volumes, PBR lighting, color and tonemapping. Ships a verified GLSL building-block library with a bundler and
   checker. Use when the user asks for a shader, Shadertoy, GLSL/.frag/.glsl code, a raymarcher, an SDF scene, a
   procedural texture or generative visual, or wants a shader fixed, optimized, ported or explained. Not for
   HLSL/Unity ShaderLab or non-graphics GPU compute.
@@ -78,6 +78,9 @@ Read only what the task needs:
 | `references/sdf-library-guide.md` | modeling: exactness tiers, blends, neighbor-checked repetition, deformation limits, WebGL pitfalls |
 | `references/rendering-pipeline.md` | lighting rigs, shadows/AO, sky and fog, volumes, tonemapping, AA, performance |
 | `references/noise-use-cases.md` | choosing Perlin/value/simplex/cellular noise, fBm/ridged/billow/warp/hybrid recipes, game use cases and primary-source code links |
+| `references/procedural-buildings.md` | parcel IDs, building massing, setbacks/roofs, facade filtering, city repetition and game integration |
+| `references/terrain-production.md` | terrain representations, designed valleys, slope/altitude materials, tracing limits, chunks and LOD |
+| `references/water-quality.md` | high-quality ocean/coastal water, wave derivatives, Fresnel/refraction/absorption, foam, presets and engine-side upgrades |
 | `references/shader-workflow.md` | planning a complex shader end to end; review checklist |
 | `references/composition-and-debugging.md` | the image reads poorly, or something is visually wrong |
 | `references/formula-cookbook.md` | multi-step recipes: modular cell lattices, terrain synthesis, organic composition |
@@ -87,7 +90,8 @@ Read only what the task needs:
 
 Templates in `templates/` are complete, render-verified starting points (gallery in the repository README):
 `raymarch-sdf.glsl`, `terrain.glsl`, `ocean.glsl`, `volumetric-clouds.glsl`, `sdf-2d-poster.glsl`,
-`pattern-swatches.glsl`, `noise-progression.glsl`, `noise-terrain-map.glsl`.
+`pattern-swatches.glsl`, `noise-progression.glsl`, `noise-terrain-map.glsl`, `procedural-city.glsl`,
+`alpine-valley.glsl`, `coastal-water.glsl`.
 
 ## Output expectations
 
@@ -98,6 +102,11 @@ When writing a shader:
 - Include `DEBUG_MODE` switches and name the art controls as constants at the top.
 - End with a short tuning guide: which constants control scale, softness, color, light and motion.
 - Say whether the shader was compile-checked, and how.
+- For buildings/terrain/water, separate implemented features from engine-side upgrades. Do not call a heightfield
+  a cave generator, a material window a modeled recess, or a procedural foam/caustic mask a fluid/light simulation.
+- For quality requests, state the target and budget, expose presets/debug views, and inspect rendered output.
+  Annotate important template presets with `// @variant QUALITY=3` (or another defined integer macro) so CI compiles
+  and renders them. Preserve horizon/shore contact and temporal filtering before adding detail.
 
 When improving an existing shader:
 

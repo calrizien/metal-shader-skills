@@ -30,8 +30,8 @@ INDEX_PATH = REF_DIR / "library-index.md"
 
 # Declaration order: a module may only depend on modules listed before it.
 MODULE_ORDER = [
-    "common", "hash", "noise", "pattern", "sdf3d", "sdf2d", "operators", "domain", "raymarch", "intersect",
-    "camera", "shading", "color", "tonemap", "volume", "atmosphere", "post", "debug",
+    "common", "hash", "noise", "pattern", "sdf3d", "sdf2d", "operators", "domain", "architecture", "raymarch", "intersect",
+    "camera", "shading", "water", "color", "tonemap", "volume", "atmosphere", "post", "debug",
 ]
 
 SHADERTOY_PRELUDE = """#version 300 es
@@ -286,9 +286,23 @@ def bundle_source(lib: Library, user_src: str, keep_docs: bool = True) -> str:
     # Keep user #defines (e.g. DEBUG_MODE, AA) at the very top so library code can see them.
     lines = user_src.splitlines()
     lead = 0
-    while lead < len(lines) and (lines[lead].startswith(("#", "//")) or not lines[lead].strip()):
+    while lead < len(lines) and (lines[lead].lstrip().startswith(("#", "//")) or not lines[lead].strip()):
         lead += 1
-    directives = [i for i in range(lead) if lines[i].startswith("#")]
+    # Never insert dependencies inside a conditional whose body starts with a declaration.
+    # A quality-preset #if followed by a const used to hide the entire library on its false branch.
+    directives = []
+    depth = 0
+    for i in range(lead):
+        match = re.match(r"\s*#\s*(\w+)", lines[i])
+        if not match:
+            continue
+        word = match.group(1)
+        if word in ("if", "ifdef", "ifndef"):
+            depth += 1
+        elif word == "endif":
+            depth -= 1
+        if depth == 0:
+            directives.append(i)
     cut = directives[-1] + 1 if directives else 0
     while cut < lead and lines[cut].strip() == "":
         cut += 1
@@ -472,6 +486,17 @@ def library_units(lib: Library) -> dict[str, str]:
     return units
 
 
+def template_variants(src: str) -> list[tuple[str, str]]:
+    """Materialize explicitly annotated quality/debug presets; reject an annotation with no matching define."""
+    variants = []
+    for key, value in re.findall(r"//\s*@variant\s+(\w+)=(\d+)", src):
+        variant, count = re.subn(rf"(^\s*#define\s+{re.escape(key)}\s+)\d+", rf"\g<1>{value}", src, flags=re.M)
+        if count != 1:
+            raise ValueError(f"@variant {key}={value} needs exactly one matching #define")
+        variants.append((f"{key.lower()}-{value}", variant))
+    return variants
+
+
 def all_units(lib: Library) -> tuple[dict[str, str], list[Finding]]:
     """Every compile unit the skill ships: library modules, reference snippets, templates."""
     findings: list[Finding] = []
@@ -496,6 +521,8 @@ def all_units(lib: Library) -> tuple[dict[str, str], list[Finding]]:
         where = f"templates/{tpl.name}"
         findings += lint_shader(src, where, complete=True)
         units[where] = shader_unit(lib, src)
+        for name, variant in template_variants(src):
+            units[f"templates/{tpl.stem}--{name}"] = shader_unit(lib, variant)
     return units, findings
 
 

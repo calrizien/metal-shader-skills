@@ -27,6 +27,9 @@ section with the formulas. The formula files use geometry-first names; this tabl
 | texture, material swatch, wallpaper | 2D procedural pattern | `pattern-swatches.glsl` |
 | comparing noise families / learning noise | 2D scalar-field board | `noise-progression.glsl`; `noise-use-cases.md` |
 | game heightmap, biome map, designed river | 2D height + separate masks | `noise-terrain-map.glsl`; `hybridTerrainHeight`; `noise-use-cases.md` |
+| city, skyscraper, procedural building facade | SDF massing + filtered material fields | `procedural-city.glsl`; `procedural-buildings.md`; `buildingProfile`, `facadeWindowMask` |
+| alpine valley, snow/rock biome, production terrain | designed heightfield + material masks | `alpine-valley.glsl`; `terrain-production.md` |
+| clear coast, lagoon, shallow refractive water | water/land heightfields + secondary rays | `coastal-water.glsl`; `water-quality.md`; `waterWaveD`, `fresnelDielectric`, `beerTransmittance` |
 
 ## Characters and creatures
 

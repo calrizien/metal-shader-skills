@@ -129,6 +129,61 @@ EXACT_ALLOWANCE = 0.01
 
 # Hand-written properties. Each body is the inside of `int runTest(vec4 a, vec4 b)`; return failure bits.
 PROPERTIES = [
+    ("building profiles remain inside declared ranges", """
+        vec2 id = floor((a.xy-0.5)*200.0);
+        vec4 p = buildingProfile(id,vec2(3.0,16.0),vec2(0.6,1.2));
+        int f=0;
+        if (p.x<3.0 || p.x>16.0 || any(lessThan(p.yz,vec2(0.6))) || any(greaterThan(p.yz,vec2(1.2)))) f|=1;
+        if (p.w<0.0 || p.w>2.0 || p.w!=floor(p.w)) f|=2;
+        if (any(notEqual(p,buildingProfile(id,vec2(3.0,16.0),vec2(0.6,1.2))))) f|=4;
+        return f;""", {}),
+    ("facade filtering: range, periodicity, large-footprint mean", """
+        vec2 uv=(a.xy-0.5)*10.0;
+        vec2 fill=vec2(0.6,0.7);
+        float m=facadeWindowMask(uv,fill,vec2(0.03));
+        int f=0;
+        if(isnan(m) || m<0.0 || m>1.0) f|=1;
+        if(abs(m-facadeWindowMask(uv+vec2(2.0,-3.0),fill,vec2(0.03)))>0.001) f|=2;
+        if(abs(facadeWindowMask(uv,fill,vec2(4.0))-0.42)>0.0001) f|=4;
+        if(facadeWindowMask(uv,vec2(0.0),vec2(4.0))!=0.0 || abs(facadeWindowMask(uv,vec2(1.0),vec2(4.0))-1.0)>0.00001) f|=8;
+        return f;""", {}),
+    ("water wave derivatives and finite-depth dispersion", """
+        vec2 p=(a.xy-0.5)*10.0;
+        vec4 w=waterWaveD(p,1.7,vec2(0.8,0.6),4.0,0.2,2.0,0.001);
+        float e=0.002;
+        vec2 fd=vec2(waterWaveD(p+vec2(e,0.0),1.7,vec2(0.8,0.6),4.0,0.2,2.0,0.001).x-waterWaveD(p-vec2(e,0.0),1.7,vec2(0.8,0.6),4.0,0.2,2.0,0.001).x,
+                     waterWaveD(p+vec2(0.0,e),1.7,vec2(0.8,0.6),4.0,0.2,2.0,0.001).x-waterWaveD(p-vec2(0.0,e),1.7,vec2(0.8,0.6),4.0,0.2,2.0,0.001).x)/(2.0*e);
+        int f=0;
+        if(length(w.yz-fd)>0.001) f|=1;
+        if(abs(w.w+(TAU/4.0)*(TAU/4.0)*w.x)>0.0001) f|=2;
+        if(waterDispersion(2.0,0.5,9.81)>waterDispersion(2.0,5.0,9.81)) f|=4;
+        if(abs(waterDispersion(2.0,100.0,9.81)-sqrt(19.62))>0.0001) f|=8;
+        if(waterDispersion(0.0,2.0,9.81)!=0.0 || waterDispersion(2.0,0.0,9.81)!=0.0) f|=16;
+        vec4 filteredWave=waterWaveD(p,1.7,vec2(0.0),4.0,0.2,2.0,3.0);
+        if(any(isnan(filteredWave)) || any(notEqual(filteredWave,vec4(0.0)))) f|=32;
+        return f;""", {}),
+    ("dielectric Fresnel: bounds, normal incidence, reciprocity, TIR", """
+        float ci=0.02+0.98*a.x;
+        float eta=1.05+1.0*a.y;
+        float fr=fresnelDielectric(ci,1.0,eta);
+        float ct=sqrt(1.0-(1.0-ci*ci)/(eta*eta));
+        int f=0;
+        if(isnan(fr) || fr<0.0 || fr>1.0) f|=1;
+        if(abs(fresnelDielectric(1.0,1.0,eta)-pow((eta-1.0)/(eta+1.0),2.0))>0.00001) f|=2;
+        if(abs(fr-fresnelDielectric(ct,eta,1.0))>0.001) f|=4;
+        if(fresnelDielectric(0.2,1.333,1.0)!=1.0) f|=8;
+        if(fresnelDielectric(0.0,1.0,1.0)!=0.0 || fresnelDielectric(ci,1.0,1.0)!=0.0) f|=16;
+        return f;""", {}),
+    ("Beer transmittance: bounds, zero path, semigroup", """
+        vec3 sigma=a.xyz*2.0;
+        float d=b.x*5.0;
+        vec3 t=beerTransmittance(sigma,d);
+        int f=0;
+        if(any(lessThan(t,vec3(0.0))) || any(greaterThan(t,vec3(1.0)))) f|=1;
+        if(any(notEqual(beerTransmittance(sigma,0.0),vec3(1.0)))) f|=2;
+        if(length(t-beerTransmittance(sigma,d*0.4)*beerTransmittance(sigma,d*0.6))>0.00001) f|=4;
+        if(any(notEqual(beerTransmittance(-sigma,d),vec3(1.0)))) f|=8;
+        return f;""", {}),
     ("hash ranges and integer-input semantics", """
         vec2 cell = floor((a.xy - 0.5) * 2e5);
         int f = 0;

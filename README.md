@@ -2,7 +2,7 @@
 
 A skill that teaches coding agents to write procedural GLSL shaders that compile on the first try and look
 intentional. It works with Claude Code, Codex, Cursor, Copilot, Gemini and others. It pairs a shader-craft
-workflow with a **verified GLSL building-block library**: 180 functions across 18 modules, each one compiled in
+workflow with a **verified GLSL building-block library**: 186 functions across 20 modules, each one compiled in
 WebGL2 and numerically tested on the GPU. A bundler inlines exactly the functions a shader uses, so the result
 pastes straight into Shadertoy.
 
@@ -96,8 +96,10 @@ What the commands do:
 | `sdf2d` | 16 primitives including vesica, moon, heart, star, regular polygon, rounded box with per-corner radii, quadratic Bézier |
 | `operators` | smooth min/max/subtract (quadratic and C2 cubic), smooth union with material blend weight, chamfer, stairs, engrave, round, onion, extrude, revolve, exact elongate |
 | `domain` | repetition (infinite, limited, mirrored), polar sectors, folds, twist and bend with their Lipschitz corrections |
+| `architecture` | stable parcel-based building dimensions/roof IDs, box-filtered facade windows that converge to opening area |
 | `raymarch` | sphere tracing with distance-relative hit threshold, tetrahedral normals, improved soft shadows, AO, thickness; WebGL-safe loops |
 | `shading` | GGX + height-correlated Smith + Schlick, metallic-roughness `shadePBR`, environment BRDF approximation, wrap diffuse, translucency, rim |
+| `water` | finite-depth dispersion, analytic wave height/slope/curvature, exact dielectric Fresnel including TIR, RGB Beer-Lambert attenuation |
 | `color` / `tonemap` | exact sRGB curves, Oklab / OkLCh mixing, blackbody colors; AgX (default), AgX punchy, Khronos PBR Neutral, ACES fitted, Reinhard |
 | `volume` / `atmosphere` | HG, dual-lobe, Rayleigh and Cornette-Shanks phase, energy-conserving `volumeStep`, Beer-Powder, analytic height fog; physically based single-scattering sky, sun disk with limb darkening |
 | `camera` / `intersect` / `post` / `debug` | look-at, thin-lens DOF, ortho; analytic sphere/box/plane hits; AA helpers, R2 supersampling offsets, cos⁴ vignette, grain, TPDF dither; distance, normal, id and heat debug views |
@@ -137,15 +139,41 @@ Click a preview for the standalone Shadertoy shader. Editable sources:
 [`noise-progression.glsl`](skills/shader-art-coding/templates/noise-progression.glsl) and
 [`noise-terrain-map.glsl`](skills/shader-art-coding/templates/noise-terrain-map.glsl).
 
+## Procedural buildings, terrain and water
+
+Three complete, texture-free starting points cover construction, landscape and shallow-water optics. Each has
+art controls, inspectable debug modes, a standalone Shadertoy bundle and a rendered preview.
+
+| [![Procedural city](gallery/procedural-city.png)](gallery/procedural-city.glsl) | [![Alpine valley](gallery/alpine-valley.png)](gallery/alpine-valley.glsl) | [![Refractive coastal water](gallery/coastal-water.png)](gallery/coastal-water.glsl) |
+|---|---|---|
+| Parcel-based masses, podiums/setbacks, varied roofs, filtered occupied windows, AO, shadows and height fog. | Designed valley, eroded/ridged terrain, snow by slope/altitude, rock strata, grass and atmospheric depth. | Analytic waves, refracted seabed, reflected land, exact Fresnel, RGB depth absorption, shore foam and three quality presets. |
+
+- **[Procedural buildings](skills/shader-art-coding/references/procedural-buildings.md):** massing hierarchy,
+  deterministic parcels, neighbor-safe repetition, facade filtering, geometry versus material detail, and mesh/engine integration.
+- **[Terrain production](skills/shader-art-coding/references/terrain-production.md):** heightfields versus density,
+  silhouette/detail separation, primary-trace refinement, biome masks, chunk coordinates, seams and LOD.
+- **[Water quality](skills/shader-art-coding/references/water-quality.md):** shallow coast versus open ocean,
+  reflection/refraction paths, finite-depth waves, filtering, quality presets, and the extra renderer/simulation
+  systems needed for film or production water. The existing [open-ocean shader](gallery/ocean.glsl) remains available.
+
+The coastal example uses `QUALITY` 1/2/3 for sky reflection, reflected-land rays, and a four-sample still preset
+with more waves/steps. It is a single-pass visual study: foam, in-scattering and caustics include artistic
+approximations; it does not simulate breaking surf or FFT ocean spectra. The guides identify implemented features
+and limits rather than promising a universal “highest quality” or frame rate.
+
+Sources are in [`templates/`](skills/shader-art-coding/templates/). Bundle with `glsl_tools.py bundle` as above.
+All three water presets and every annotated diagnostic view are compiled and rendered by the harness.
+
 ## Verification
 
 | Check | Where | What it proves |
 |---|---|---|
 | Lint + drift | `glsl_tools.py check` | docs and tags on every function, module order, no WebGL1 or sine-hash patterns, reference snippets identical to the library |
 | glslang compile | CI (`checks.yml`) | every library module, reference snippet and template compiles as GLSL ES 3.00 |
-| WebGL2 compile | `tests/` harness | all 160 units compile under ANGLE, which also enforces WebGL-only rules |
-| GPU property tests | `tests/properties.py` | 85 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips |
-| Renders | harness + gallery | every template renders with no NaNs and no black frames; images saved to `gallery/` |
+| WebGL2 compile | `tests/` harness | all library/reference/template units and annotated quality/debug variants compile under ANGLE, which also enforces WebGL-only rules |
+| GPU property tests | `tests/properties.py` | 90 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips, facade filtering, water dispersion/Fresnel/attenuation |
+| Renders | harness + gallery | 11 beauty templates plus 16 quality/debug variants; no NaNs or black frames; beauty PNGs saved to `gallery/` |
+| Bundler regressions | `tests/test_bundler.py` | conditional quality macros cannot hide dependencies; annotated variants replace the intended define and reject missing defines |
 | Skill effect | `evals/` (`claude plugin eval`, paid, manual) | output-rule adherence with the skill vs without it on 6 shader tasks, plus no false triggers on 3 near-miss tasks; see [evals/README.md](evals/README.md) |
 
 Run it locally: `python3 tests/build_harness.py && python3 tests/serve.py`, then open
