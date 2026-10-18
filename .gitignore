@@ -5,3 +5,6 @@ tmp/
 *.mp3
 *.wav
 *.webm
+build/
+.claude/launch.json
+__pycache__/

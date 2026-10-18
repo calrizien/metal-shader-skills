@@ -1,0 +1,47 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  static:
+    name: lint, drift, glslang compile
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install glslang
+        run: sudo apt-get update && sudo apt-get install -y glslang-tools
+      - name: Library index is up to date
+        run: python3 skills/shader-art-coding/scripts/glsl_tools.py index --check
+      - name: Gallery bundles are up to date
+        run: python3 tests/build_gallery.py --check
+      - name: Lint, drift and compile every unit
+        run: python3 skills/shader-art-coding/scripts/glsl_tools.py check
+
+  webgl:
+    name: WebGL2 compile, GPU property tests, renders
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright Chromium
+        run: |
+          pip install playwright==1.49.1
+          python -m playwright install --with-deps chromium
+      - name: Run harness (SwiftShader)
+        run: python tests/run_webgl.py --size 320x180
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: webgl-results
+          path: |
+            build/webgl-results.json
+            build/harness.html

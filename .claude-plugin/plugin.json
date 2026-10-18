@@ -1,0 +1,11 @@
+{
+  "name": "shader-skills",
+  "displayName": "Shader Skills",
+  "version": "2.0.0",
+  "description": "Procedural GLSL / Shadertoy shader skill: a verified building-block library (SDFs, noise, raymarching, shading, color, volumes) with a bundler, checker, templates and references.",
+  "author": { "name": "gokayfem", "url": "https://github.com/gokayfem" },
+  "homepage": "https://github.com/gokayfem/shader-skills",
+  "repository": "https://github.com/gokayfem/shader-skills",
+  "license": "MIT",
+  "keywords": ["glsl", "shadertoy", "webgl", "shader", "sdf", "raymarching", "procedural", "noise", "generative-art"]
+}
