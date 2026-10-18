@@ -77,6 +77,7 @@ Read only what the task needs:
 | `references/library-index.md` | choosing functions: every library function with signature, exactness and uses |
 | `references/sdf-library-guide.md` | modeling: exactness tiers, blends, neighbor-checked repetition, deformation limits, WebGL pitfalls |
 | `references/rendering-pipeline.md` | lighting rigs, shadows/AO, sky and fog, volumes, tonemapping, AA, performance |
+| `references/noise-use-cases.md` | choosing Perlin/value/simplex/cellular noise, fBm/ridged/billow/warp/hybrid recipes, game use cases and primary-source code links |
 | `references/shader-workflow.md` | planning a complex shader end to end; review checklist |
 | `references/composition-and-debugging.md` | the image reads poorly, or something is visually wrong |
 | `references/formula-cookbook.md` | multi-step recipes: modular cell lattices, terrain synthesis, organic composition |
@@ -86,7 +87,7 @@ Read only what the task needs:
 
 Templates in `templates/` are complete, render-verified starting points (gallery in the repository README):
 `raymarch-sdf.glsl`, `terrain.glsl`, `ocean.glsl`, `volumetric-clouds.glsl`, `sdf-2d-poster.glsl`,
-`pattern-swatches.glsl`.
+`pattern-swatches.glsl`, `noise-progression.glsl`, `noise-terrain-map.glsl`.
 
 ## Output expectations
 

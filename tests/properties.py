@@ -213,6 +213,17 @@ PROPERTIES = [
         if (isnan(b2) || b2 < 0.0 || b2 > 1.0) f |= 4;
         if (isnan(b3) || b3 < 0.0 || b3 > 1.0) f |= 8;
         return f;""", {}),
+    ("hybridTerrainHeight: finite bounded output and safe octave limits", """
+        vec2 p = (a.xy - 0.5) * 80.0;
+        int count = 1 + int(b.x * 12.0);
+        float h = hybridTerrainHeight(p, count);
+        float low = hybridTerrainHeight(p, 0);
+        float high = hybridTerrainHeight(p, 99);
+        int f = 0;
+        if (isnan(h) || isinf(h) || h < 0.0 || h > 1.0) f |= 1;
+        if (isnan(low) || abs(low - hybridTerrainHeight(p, 1)) > 1e-6) f |= 2;
+        if (isnan(high) || abs(high - hybridTerrainHeight(p, 12)) > 1e-6) f |= 4;
+        return f;""", {}),
     ("noise and fbm ranges", """
         vec2 p = (a.xy - 0.5) * 200.0;
         vec3 q = (a.xyz - 0.5) * 50.0;

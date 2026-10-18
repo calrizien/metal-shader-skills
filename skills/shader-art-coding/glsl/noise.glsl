@@ -426,6 +426,22 @@ float smoothVoronoi(vec2 p, float k) {
     return -log2(acc) / k;
 }
 
+/// Bounded hybrid terrain recipe: broad gradient fBm, warped ridged detail and cellular breakup.
+/// This is an artistic composition, not Musgrave's named hybrid-multifractal algorithm. Coordinates are
+/// warped before all three fields are sampled; octaves is clamped to [1, FBM_MAX_OCTAVES].
+/// @use game heightmaps, rocky islands, biome elevation masks, alien terrain
+/// @range [0,1]
+/// @see https://thebookofshaders.com/13/ (octaves, ridges and warping); https://thebookofshaders.com/12/ (cells)
+float hybridTerrainHeight(vec2 p, int octaves) {
+    int count = clamp(octaves, 1, FBM_MAX_OCTAVES);
+    vec2 warp = vec2(fbm(p * 0.35, count), fbm(p * 0.35 + vec2(19.1, -7.3), count));
+    vec2 q = p + 0.8 * warp;
+    float broad = 0.5 + 0.5 * fbm(q * 0.45, count);
+    float ridges = ridgedFbm(q * 1.7, count);
+    float cells = 1.0 - clamp(voronoi(q * 2.5, 0.75).x, 0.0, 1.0);
+    return clamp(0.45 * broad + 0.45 * ridges + 0.10 * cells, 0.0, 1.0);
+}
+
 /// Interleaved gradient noise: cheap per-pixel noise whose 3x3 neighborhoods are nearly stratified. Not a hash.
 /// pixel must be integer pixel coordinates (floor(fragCoord)). The frame overload animates it for accumulation and TAA.
 /// @use removing banding before 8-bit output, jittering ray start offsets, stochastic transparency
