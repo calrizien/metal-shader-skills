@@ -107,6 +107,18 @@ Keep it in a scratch folder (not in the deliverable). It costs an hour and saves
 - **Diff and bench:** before/after image difference per beat, and a median frame time per beat, for any change that
   should not alter the look.
 
+**Test the comparison before trusting it.** Mean colour per region can match while the picture is wrong: a flat grey
+frame with the measured patch colours painted on passes a colour-only check.
+
+- **Score renders that must fail.** Before milestone 2, run the comparison on a flat frame painted with the measured
+  colours, a single frozen reference frame, and the reference frames shuffled in time. Any check that passes one of
+  them is not measuring what it claims.
+- **Add a layout signal.** Classify a coarse grid of cells (water, rock, foliage, …) by colour and report the share of
+  cells that match the reference at each timeline row. Measure it on the reference itself first (two different
+  shots; the same shot 1 s apart) so the number has a scale.
+- **Optional: a fresh reviewer.** When your tool can start a subagent, have one with no access to the conversation
+  or the source judge the side-by-sides against the section 0 checklist.
+
 ## 4. Scene construction
 
 - **Model:** SDF raymarching (start from `templates/raymarch-sdf.glsl`; borrow ground marching and fog from
