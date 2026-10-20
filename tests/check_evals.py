@@ -6,7 +6,7 @@
 Checks every case's prompt.md and graders/*.md against the fields the plugin-evals docs list, enforces this suite's
 conventions (positive / negative tags, identical shared graders, a skill-not-fired grader on negatives), and runs the
 grader regexes on real inputs: the gallery shaders, the fixture shaders embedded in the prompts, and real output of
-`glsl_tools.py check`. Frontmatter is parsed with a small YAML subset (scalars, quoted strings, flow lists, one level of
+`metal_tools.py check`. Frontmatter is parsed with a small YAML subset (scalars, quoted strings, flow lists, one level of
 nested maps), so keep it within that subset.
 """
 
@@ -21,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EVALS = ROOT / "evals"
-TOOLS = ROOT / "skills" / "shader-art-coding" / "scripts" / "glsl_tools.py"
+TOOLS = ROOT / "skills" / "metal-shader-art" / "scripts" / "metal_tools.py"
 
 # https://code.claude.com/docs/en/plugin-evals#prompt-md-fields and #grader-frontmatter
 PROMPT_FIELDS = {"schema_version", "name", "description", "tags", "plugins", "runs", "expected_outcome", "model",
@@ -39,7 +39,7 @@ TARGETS = {"last_message", "trace", "files", "mock_calls"}
 TOOLS_KNOWN = {"Read", "Glob", "Grep", "NotebookRead", "Skill", "AskUserQuestion", "Agent", "TodoWrite", "TaskCreate",
                "TaskGet", "TaskList", "TaskUpdate", "TaskStop", "Bash", "Write", "Edit", "WebFetch", "WebSearch"}
 # graders every positive case carries, byte-identical
-SHARED_POSITIVE = ["mainimage", "no-banned-constructs", "ran-check", "check-clean", "skill-fired"]
+SHARED_POSITIVE = ["metal-entry", "no-banned-constructs", "ran-check", "check-clean", "skill-fired"]
 
 errors: list[str] = []
 
@@ -248,14 +248,14 @@ def check_suite_policy(positives: list[Path], negatives: list[Path]) -> None:
 
 def fixture(case: str) -> str:
     _, body = frontmatter(EVALS / case / "prompt.md")
-    m = re.search(r"```glsl\n(.*?)```", body, re.S)
-    assert m, f"{case}: no ```glsl fixture in the prompt"
+    m = re.search(r"```(?:glsl|metal)\n(.*?)```", body, re.S)
+    assert m, f"{case}: no shader fixture in the prompt"
     return m.group(1)
 
 
 def checker_output(src: str) -> str:
     with tempfile.TemporaryDirectory() as tmp:
-        path = Path(tmp) / "final.glsl"
+        path = Path(tmp) / "final.metal"
         path.write_text(src, encoding="utf-8")
         run = subprocess.run([sys.executable, str(TOOLS), "check", str(path)], capture_output=True, text=True)
     return run.stdout
@@ -267,17 +267,17 @@ def expect(name: str, rx: re.Pattern, text: str, found: bool) -> None:
 
 
 def self_tests() -> None:
-    main_rx = grader_regex("sdf-still-life", "mainimage")
+    main_rx = grader_regex("sdf-still-life", "metal-entry")
     banned_rx = grader_regex("sdf-still-life", "no-banned-constructs")
-    for shader in sorted((ROOT / "gallery").glob("*.glsl")):
+    for shader in sorted((ROOT / "gallery").glob("*.metal")):
         text = shader.read_text(encoding="utf-8")
-        expect(f"mainimage on gallery/{shader.name}", main_rx, text, True)
+        expect(f"metal entry on gallery/{shader.name}", main_rx, text, True)
         expect(f"no-banned-constructs on gallery/{shader.name}", banned_rx, text, False)
 
     twisted, webgl1 = fixture("fix-twist-holes"), fixture("port-webgl1")
-    expect("mainimage on the twist fixture", main_rx, twisted, True)
+    expect("unbundled twist fixture has no native entry yet", main_rx, twisted, False)
     expect("no-banned-constructs on the twist fixture", banned_rx, twisted, False)
-    expect("mainimage on the WebGL1 fixture", main_rx, webgl1, False)
+    expect("metal entry on the WebGL1 fixture", main_rx, webgl1, False)
     for token in ("gl_FragColor = vec4(1.0);", "c = texture2D(t, uv);", "#version 300 es",
                   "return fract(sin(x) * 43758.5453);"):
         expect(f"no-banned-constructs on {token!r}", banned_rx, "void f() {}\n" + token, True)
@@ -288,7 +288,7 @@ def self_tests() -> None:
 
     clean, dirty = checker_output(twisted), checker_output(webgl1)
     if "0 error(s)" not in clean or "0 error(s)" in dirty:
-        fail("self-test", f"unexpected glsl_tools.py check output:\n{clean}\n{dirty}")
+        fail("self-test", f"unexpected metal_tools.py check output:\n{clean}\n{dirty}")
     clean_rx = grader_regex("sdf-still-life", "check-clean")
     # Traces and tool inputs are compact JSON (no spaces after `:` or `,`), as in a real v2.1.299 eval trace.
     compact = lambda o: json.dumps(o, separators=(",", ":"))  # noqa: E731
@@ -301,18 +301,18 @@ def self_tests() -> None:
 
     ran_rx = grader_regex("sdf-still-life", "ran-check")
     bash = lambda cmd: compact({"command": cmd, "description": "Check the shader"})  # noqa: E731
-    expect("ran-check on a relative check", ran_rx, bash("python3 scripts/glsl_tools.py check out.glsl"), True)
+    expect("ran-check on a relative check", ran_rx, bash("python3 scripts/metal_tools.py check out.metal"), True)
     expect("ran-check on a quoted absolute check", ran_rx,
-           bash('cd /p/skills/shader-art-coding && python3 "scripts/glsl_tools.py" check "/w/final.glsl"'), True)
-    expect("ran-check on the library self-check", ran_rx, bash("python3 scripts/glsl_tools.py check"), False)
-    expect("ran-check on a bundle", ran_rx, bash("python3 scripts/glsl_tools.py bundle shader.glsl -o out.glsl"),
+           bash('cd /p/skills/metal-shader-art && python3 "scripts/metal_tools.py" check "/w/final.metal"'), True)
+    expect("ran-check on the library self-check", ran_rx, bash("python3 scripts/metal_tools.py check"), False)
+    expect("ran-check on a bundle", ran_rx, bash("python3 scripts/metal_tools.py bundle shader.metal -o out.metal"),
            False)
 
     skill_rx = grader_regex("sdf-still-life", "skill-fired")
     skill = lambda name: compact({"skill": name, "args": "Port the shader"})  # noqa: E731
-    expect("skill-fired, namespaced", skill_rx, skill("shader-skills:shader-art-coding"), True)
-    expect("skill-fired, bare", skill_rx, skill("shader-art-coding"), True)
-    expect("skill-fired, other skill", skill_rx, skill("shader-skills:other"), False)
+    expect("skill-fired, namespaced", skill_rx, skill("metal-shader-skills:metal-shader-art"), True)
+    expect("skill-fired, bare", skill_rx, skill("metal-shader-art"), True)
+    expect("skill-fired, other skill", skill_rx, skill("metal-shader-skills:other"), False)
 
 
 def main() -> int:

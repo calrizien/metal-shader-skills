@@ -1,0 +1,20 @@
+---
+description: Procedural MSL shader art for Metal 4
+globs: **/*.metal
+alwaysApply: false
+---
+
+# Metal 4 shader art
+
+Use the `metal-shader-art` skill from
+[calrizien/metal-shader-skills](https://github.com/calrizien/metal-shader-skills).
+Target MSL 4.0 and native Metal entry functions.
+
+Read `SKILL.md`, then only the references needed for the subject. Search the
+library with `scripts/metal_tools.py search`, bundle with `bundle`, compile with
+`check`, and inspect a native preview with `render`.
+
+Use explicit constant buffers, MSL vector types, correct address spaces, and
+the documented color/coordinate contract. Preserve debug views and keep
+compile, numerical GPU, and visual proof separate. If tools are unavailable,
+state that the corresponding check was not run.

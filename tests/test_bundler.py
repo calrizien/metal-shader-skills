@@ -3,8 +3,8 @@ import sys
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills/shader-art-coding/scripts"))
-import glsl_tools as gt
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills/metal-shader-art/scripts"))
+import metal_tools as gt
 
 
 class ConditionalPreamble(unittest.TestCase):
@@ -19,7 +19,7 @@ const int AA = 4;
 #else
 const int AA = 1;
 #endif
-float scene(vec2 p) { return gradientNoise(p); }
+float scene(float2 p) { return gradientNoise(p); }
 """
         result = gt.bundle_source(self.lib, source)
         self.assertLess(result.index("#define QUALITY"), result.index("float gradientNoise("))
@@ -33,13 +33,13 @@ float scene(vec2 p) { return gradientNoise(p); }
 #else
 #define AA 1
 #endif
-float scene(vec2 p) { return gradientNoise(p); }
+float scene(float2 p) { return gradientNoise(p); }
 """
         result = gt.bundle_source(self.lib, source)
         self.assertLess(result.index("#endif"), result.index("float gradientNoise("))
 
     def test_indented_open_conditional_is_safe(self):
-        source = "  #if QUALITY == 3\nconst int AA = 4;\n  #endif\nfloat scene(vec2 p) { return gradientNoise(p); }"
+        source = "  #if QUALITY == 3\nconst int AA = 4;\n  #endif\nfloat scene(float2 p) { return gradientNoise(p); }"
         result = gt.bundle_source(self.lib, source)
         self.assertLess(result.index("float gradientNoise("), result.index("#if QUALITY"))
 

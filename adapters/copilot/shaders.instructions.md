@@ -1,13 +1,18 @@
 ---
-applyTo: "**/*.glsl,**/*.frag,**/*.fs"
+applyTo: "**/*.metal"
 ---
 
-Copy this file into your repository's `.github/instructions/`. For agent mode, also install the skill with
-`gh skill install gokayfem/shader-skills shader-art-coding`.
+# Metal 4 shader art
 
-- Write Shadertoy-compatible GLSL ES 3.00 with `mainImage(out vec4 fragColor, in vec2 fragCoord)`.
-- Prefer the `shader-art-coding` library functions (SDFs, noise, raymarching, shading, tonemapping) over hand-written
-  copies, and bundle with `scripts/glsl_tools.py bundle`.
-- No `#version`, custom uniforms, `?:` on structs, or `fract(sin(...))` hashes.
-- Debug with `#define DEBUG_MODE 0` (0 final, 1 distance, 2 normals, 3 ids, 4 steps, 5 masks, 6 lighting terms).
-- Light in linear color; tonemap per sample, then encode once with the exact sRGB curve, then dither.
+Use the `metal-shader-art` skill from
+[calrizien/metal-shader-skills](https://github.com/calrizien/metal-shader-skills).
+Target MSL 4.0 and native Metal entry functions.
+
+Read `SKILL.md`, then only the references needed for the subject. Search the
+library with `scripts/metal_tools.py search`, bundle with `bundle`, compile with
+`check`, and inspect a native preview with `render`.
+
+Use explicit constant buffers, MSL vector types, correct address spaces, and
+the documented color/coordinate contract. Preserve debug views and keep
+compile, numerical GPU, and visual proof separate. If tools are unavailable,
+state that the corresponding check was not run.

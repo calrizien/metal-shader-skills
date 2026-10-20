@@ -1,9 +1,19 @@
-# Credits and Sources
+# Credits and sources
 
-All GLSL in this repository is an original implementation, released under the MIT license (see LICENSE). The
-techniques come from the published work below. Numeric constants (matrices, fit coefficients, physical
-coefficients) are facts reproduced from their sources. No third-party shader source is copied; Shadertoy shaders
-default to CC BY-NC-SA 3.0, which is incompatible with MIT.
+This fork ports [gokayfem/shader-skills](https://github.com/gokayfem/shader-skills)
+at commit `e09bc993bf04201f26c03c87c89210e9b472f526` to Metal Shading Language 4.0.
+The procedural library, art templates, mathematical references, and numerical
+property oracles derive from that MIT-licensed project. The original copyright
+and license remain in `LICENSE`.
+
+The Metal port adds native entry points, explicit data layout, MSL compiler
+checks, and a Metal 4 host renderer. Apple documentation is linked in the
+[integration guide](skills/metal-shader-art/references/metal4-integration.md);
+the Apple specification is not redistributed.
+
+The upstream project's technique credits follow. They describe the original
+implementation sources. External GLSL references remain references, not MSL
+files supplied by this fork.
 
 | Technique | Source | License or terms of the source |
 |---|---|---|
@@ -34,7 +44,7 @@ default to CC BY-NC-SA 3.0, which is incompatible with MIT.
 | Noise progression: fBm, ridges, cellular construction, domain warping | [Gonzalez Vivo and Lowe, The Book of Shaders, chapters 12](https://thebookofshaders.com/12/) and [13](https://thebookofshaders.com/13/) | explanatory sources; no source code copied |
 | External noise code catalog | [Gustavson / Ashima, webgl-noise](https://github.com/stegu/webgl-noise), [psrdnoise](https://github.com/stegu/psrdnoise), [Auburn, FastNoise Lite](https://github.com/Auburn/FastNoiseLite) | MIT alternatives linked in the use-case guide; not vendored |
 | Billow terminology | [libnoise Billow documentation](https://libnoise.sourceforge.net/docs/classnoise_1_1module_1_1Billow.html) | reference only; code not copied; local weighted [0,1] billow differs |
-| Hybrid terrain height and designed river composition | this repository, `hybridTerrainHeight` / `noise-terrain-map.glsl` | original MIT composition; not a claim to implement Musgrave's hybrid multifractal or hydrological erosion |
+| Hybrid terrain height and designed river composition | this repository, `hybridTerrainHeight` / `noise-terrain-map.metal` | original MIT composition; not a claim to implement Musgrave's hybrid multifractal or hydrological erosion |
 | Sum-of-sines water with sharpened crests, deep-water dispersion | Mark Finch, "Effective Water Simulation from Physical Models", GPU Gems (2004), chapter 1 | math |
 | Filtering vanished normal detail into roughness | Toksvig, "Mipmapping Normal Maps" (2005); Olano and Baker, "LEAN Mapping" (I3D 2010) | math |
 | Four-arc (Moss) egg | classical compass construction | geometry |

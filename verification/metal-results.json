@@ -1,0 +1,3441 @@
+{
+  "api": "Metal 4",
+  "commit": "e09bc993bf04201f26c03c87c89210e9b472f526",
+  "device": "Apple M1 Max",
+  "elapsedSeconds": 3.409,
+  "exitCode": 0,
+  "failures": 0,
+  "language": "metal4.0",
+  "manifestSHA256": "af9a2a60e171ee96c79828abf73574061369c0dc80db164a3c3033ac52402283",
+  "mathMode": "safe",
+  "metalCompiler": "Apple metal version 32023.921 (metalfe-32023.921.6)\nTarget: air64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /private/var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.1.266.1.Qu6GLC/Metal.xctoolchain/usr/metal/current/bin",
+  "os": "Version 27.0.1 (Build 26A434)",
+  "results": [
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:632",
+      "pass": true,
+      "source": "000.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water.metal",
+      "pass": true,
+      "source": "001.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:298",
+      "pass": true,
+      "source": "002.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/rendering-pipeline.md:60",
+      "pass": true,
+      "source": "003.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:511",
+      "pass": true,
+      "source": "004.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:552",
+      "pass": true,
+      "source": "005.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:182",
+      "pass": true,
+      "source": "006.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:384",
+      "pass": true,
+      "source": "007.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/sdf-2d-poster.metal",
+      "pass": true,
+      "source": "008.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:315",
+      "pass": true,
+      "source": "009.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:116",
+      "pass": true,
+      "source": "010.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:301",
+      "pass": true,
+      "source": "011.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:156",
+      "pass": true,
+      "source": "012.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:94",
+      "pass": true,
+      "source": "013.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--debug_mode-6",
+      "pass": true,
+      "source": "014.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:341",
+      "pass": true,
+      "source": "015.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/sdf-library-guide.md:86",
+      "pass": true,
+      "source": "016.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/procedural-city.metal",
+      "pass": true,
+      "source": "017.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/volume.metal",
+      "pass": true,
+      "source": "018.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:146",
+      "pass": true,
+      "source": "019.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:78",
+      "pass": true,
+      "source": "020.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:544",
+      "pass": true,
+      "source": "021.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/raymarch.metal",
+      "pass": true,
+      "source": "022.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:54",
+      "pass": true,
+      "source": "023.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:668",
+      "pass": true,
+      "source": "024.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:498",
+      "pass": true,
+      "source": "025.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:125",
+      "pass": true,
+      "source": "026.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:64",
+      "pass": true,
+      "source": "027.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/alpine-valley.metal",
+      "pass": true,
+      "source": "028.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/procedural-city--debug_mode-4",
+      "pass": true,
+      "source": "029.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/procedural-buildings.md:53",
+      "pass": true,
+      "source": "030.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:450",
+      "pass": true,
+      "source": "031.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:83",
+      "pass": true,
+      "source": "032.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/water-quality.md:62",
+      "pass": true,
+      "source": "033.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:823",
+      "pass": true,
+      "source": "034.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:304",
+      "pass": true,
+      "source": "035.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:736",
+      "pass": true,
+      "source": "036.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/color.metal",
+      "pass": true,
+      "source": "037.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:209",
+      "pass": true,
+      "source": "038.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:177",
+      "pass": true,
+      "source": "039.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:575",
+      "pass": true,
+      "source": "040.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:320",
+      "pass": true,
+      "source": "041.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/raymarch-sdf.metal",
+      "pass": true,
+      "source": "042.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:635",
+      "pass": true,
+      "source": "043.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/terrain.metal",
+      "pass": true,
+      "source": "044.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/operators.metal",
+      "pass": true,
+      "source": "045.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:98",
+      "pass": true,
+      "source": "046.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:699",
+      "pass": true,
+      "source": "047.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:657",
+      "pass": true,
+      "source": "048.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:199",
+      "pass": true,
+      "source": "049.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/camera.metal",
+      "pass": true,
+      "source": "050.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/noise.metal",
+      "pass": true,
+      "source": "051.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:691",
+      "pass": true,
+      "source": "052.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:732",
+      "pass": true,
+      "source": "053.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:335",
+      "pass": true,
+      "source": "054.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:786",
+      "pass": true,
+      "source": "055.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/rendering-pipeline.md:31",
+      "pass": true,
+      "source": "056.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/shading.metal",
+      "pass": true,
+      "source": "057.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/architecture.metal",
+      "pass": true,
+      "source": "058.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:760",
+      "pass": true,
+      "source": "059.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:327",
+      "pass": true,
+      "source": "060.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:272",
+      "pass": true,
+      "source": "061.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:365",
+      "pass": true,
+      "source": "062.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:241",
+      "pass": true,
+      "source": "063.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:142",
+      "pass": true,
+      "source": "064.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:242",
+      "pass": true,
+      "source": "065.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:523",
+      "pass": true,
+      "source": "066.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:762",
+      "pass": true,
+      "source": "067.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/water-quality.md:85",
+      "pass": true,
+      "source": "068.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:163",
+      "pass": true,
+      "source": "069.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:413",
+      "pass": true,
+      "source": "070.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:271",
+      "pass": true,
+      "source": "071.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:791",
+      "pass": true,
+      "source": "072.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/common.metal",
+      "pass": true,
+      "source": "073.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/noise-progression.metal",
+      "pass": true,
+      "source": "074.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:465",
+      "pass": true,
+      "source": "075.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:715",
+      "pass": true,
+      "source": "076.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:260",
+      "pass": true,
+      "source": "077.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:525",
+      "pass": true,
+      "source": "078.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:403",
+      "pass": true,
+      "source": "079.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:108",
+      "pass": true,
+      "source": "080.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:133",
+      "pass": true,
+      "source": "081.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:251",
+      "pass": true,
+      "source": "082.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:129",
+      "pass": true,
+      "source": "083.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:501",
+      "pass": true,
+      "source": "084.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/alpine-valley--debug_mode-1",
+      "pass": true,
+      "source": "085.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:96",
+      "pass": true,
+      "source": "086.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:188",
+      "pass": true,
+      "source": "087.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:414",
+      "pass": true,
+      "source": "088.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/sdf-library-guide.md:32",
+      "pass": true,
+      "source": "089.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/procedural-city--debug_mode-2",
+      "pass": true,
+      "source": "090.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/tonemap.metal",
+      "pass": true,
+      "source": "091.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/procedural-city--debug_mode-5",
+      "pass": true,
+      "source": "092.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:433",
+      "pass": true,
+      "source": "093.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:83",
+      "pass": true,
+      "source": "094.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:159",
+      "pass": true,
+      "source": "095.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:215",
+      "pass": true,
+      "source": "096.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:233",
+      "pass": true,
+      "source": "097.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/alpine-valley--debug_mode-2",
+      "pass": true,
+      "source": "098.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:558",
+      "pass": true,
+      "source": "099.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:261",
+      "pass": true,
+      "source": "100.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/water.metal",
+      "pass": true,
+      "source": "101.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:315",
+      "pass": true,
+      "source": "102.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/atmosphere.metal",
+      "pass": true,
+      "source": "103.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:684",
+      "pass": true,
+      "source": "104.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:861",
+      "pass": true,
+      "source": "105.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:427",
+      "pass": true,
+      "source": "106.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/debug.metal",
+      "pass": true,
+      "source": "107.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:452",
+      "pass": true,
+      "source": "108.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:203",
+      "pass": true,
+      "source": "109.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/procedural-buildings.md:36",
+      "pass": true,
+      "source": "110.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/domain.metal",
+      "pass": true,
+      "source": "111.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:183",
+      "pass": true,
+      "source": "112.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/noise-terrain-map.metal",
+      "pass": true,
+      "source": "113.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:589",
+      "pass": true,
+      "source": "114.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:222",
+      "pass": true,
+      "source": "115.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/intersect.metal",
+      "pass": true,
+      "source": "116.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:492",
+      "pass": true,
+      "source": "117.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:192",
+      "pass": true,
+      "source": "118.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/alpine-valley--debug_mode-3",
+      "pass": true,
+      "source": "119.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:371",
+      "pass": true,
+      "source": "120.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--debug_mode-1",
+      "pass": true,
+      "source": "121.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:604",
+      "pass": true,
+      "source": "122.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/hash.metal",
+      "pass": true,
+      "source": "123.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:174",
+      "pass": true,
+      "source": "124.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/ocean.metal",
+      "pass": true,
+      "source": "125.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/volumetric-clouds.metal",
+      "pass": true,
+      "source": "126.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:253",
+      "pass": true,
+      "source": "127.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:378",
+      "pass": true,
+      "source": "128.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:158",
+      "pass": true,
+      "source": "129.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:556",
+      "pass": true,
+      "source": "130.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:651",
+      "pass": true,
+      "source": "131.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:174",
+      "pass": true,
+      "source": "132.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/alpine-valley--debug_mode-4",
+      "pass": true,
+      "source": "133.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/pattern-swatches.metal",
+      "pass": true,
+      "source": "134.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:341",
+      "pass": true,
+      "source": "135.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:439",
+      "pass": true,
+      "source": "136.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:587",
+      "pass": true,
+      "source": "137.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:446",
+      "pass": true,
+      "source": "138.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:471",
+      "pass": true,
+      "source": "139.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:155",
+      "pass": true,
+      "source": "140.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:492",
+      "pass": true,
+      "source": "141.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:742",
+      "pass": true,
+      "source": "142.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--debug_mode-2",
+      "pass": true,
+      "source": "143.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:138",
+      "pass": true,
+      "source": "144.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:361",
+      "pass": true,
+      "source": "145.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:80",
+      "pass": true,
+      "source": "146.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:773",
+      "pass": true,
+      "source": "147.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--quality-1",
+      "pass": true,
+      "source": "148.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:284",
+      "pass": true,
+      "source": "149.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:226",
+      "pass": true,
+      "source": "150.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--quality-3",
+      "pass": true,
+      "source": "151.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:659",
+      "pass": true,
+      "source": "152.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:218",
+      "pass": true,
+      "source": "153.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--debug_mode-3",
+      "pass": true,
+      "source": "154.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:289",
+      "pass": true,
+      "source": "155.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:630",
+      "pass": true,
+      "source": "156.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/procedural-city--debug_mode-3",
+      "pass": true,
+      "source": "157.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:56",
+      "pass": true,
+      "source": "158.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:191",
+      "pass": true,
+      "source": "159.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:386",
+      "pass": true,
+      "source": "160.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:365",
+      "pass": true,
+      "source": "161.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:526",
+      "pass": true,
+      "source": "162.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/sdf2d.metal",
+      "pass": true,
+      "source": "163.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:401",
+      "pass": true,
+      "source": "164.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/terrain-production.md:37",
+      "pass": true,
+      "source": "165.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/sdf-library-guide.md:106",
+      "pass": true,
+      "source": "166.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/SKILL.md:46",
+      "pass": true,
+      "source": "167.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:471",
+      "pass": true,
+      "source": "168.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/sdf3d.metal",
+      "pass": true,
+      "source": "169.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:389",
+      "pass": true,
+      "source": "170.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--debug_mode-4",
+      "pass": true,
+      "source": "171.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:110",
+      "pass": true,
+      "source": "172.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:129",
+      "pass": true,
+      "source": "173.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:59",
+      "pass": true,
+      "source": "174.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:576",
+      "pass": true,
+      "source": "175.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/post.metal",
+      "pass": true,
+      "source": "176.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:710",
+      "pass": true,
+      "source": "177.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-cookbook.md:68",
+      "pass": true,
+      "source": "178.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-terrain.md:258",
+      "pass": true,
+      "source": "179.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:354",
+      "pass": true,
+      "source": "180.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-materials.md:613",
+      "pass": true,
+      "source": "181.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/noise-use-cases.md:69",
+      "pass": true,
+      "source": "182.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:605",
+      "pass": true,
+      "source": "183.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "templates/coastal-water--debug_mode-5",
+      "pass": true,
+      "source": "184.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "metal/pattern.metal",
+      "pass": true,
+      "source": "185.metal"
+    },
+    {
+      "kind": "compile",
+      "name": "skills/metal-shader-art/references/formula-code-couples-sdf.md:209",
+      "pass": true,
+      "source": "186.metal"
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdSphere (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "187.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdBox (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "188.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 1,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdRoundBox (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "189.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 11,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdBoxFrame (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "190.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdTorus (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "191.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 6,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCappedTorus (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "192.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdLink (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "193.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdPlane (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "194.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCapsule (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "195.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdVerticalCapsule (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "196.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCylinder (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "197.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCappedCone (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "198.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCone (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "199.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCone flat (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "200.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdRoundCone (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "201.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdEllipsoid (approx)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "202.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCutHollowSphere (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "203.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 2,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdHexPrism (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "204.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdOctahedron (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "205.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdGyroid (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "206.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 2,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCutSphere (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "207.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdDeathStar (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "208.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 3,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdQuadraticBezier 3D (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "209.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "smin (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "210.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sminCubic (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "211.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "smoothSubtract (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "212.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "opChamferUnion (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "213.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "opStairsUnion (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "214.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "opEngrave (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "215.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 1,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "opOnion (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "216.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 8,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "opExtrude (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "217.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 2,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "opRevolve (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "218.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "opElongate (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "219.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 74,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "domRepeat (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "220.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 28,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "domPolar (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "221.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 7,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "domFold (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "222.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "domTwist (scaled) (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "223.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdCircle (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "224.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 3,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdBox 2D (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "225.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 1,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdRoundedBox (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "226.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdSegment (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "227.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdUnevenCapsule (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "228.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 14,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdArc (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "229.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 5,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdEquilateralTriangle (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "230.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 3,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdTriangle (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "231.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 3,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdTriangle cw (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "232.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 4,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdRegularPolygon (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "233.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 17,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdStar (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "234.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 2,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdVesica (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "235.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 3,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdMoon (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "236.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 2,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdHeart (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "237.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 3,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdRhombus (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "238.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdEllipse (approx)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "239.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "1": 0.001,
+        "2": 0.03
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 5,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdQuadraticBezier 2D (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "240.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdQuadraticBezier 2D straight (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "241.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "hexEdgeDistance (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "242.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "truchetArcs (bound)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "243.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 4,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdPie (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "244.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 13,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdPie concave (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "245.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 10,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdHorseshoe (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "246.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 4,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdParabolaSegment (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "247.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 2,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdParabolaSegment flat (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "248.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdParabolaSegment tall (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "249.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 4,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdParabolaSegment boundary (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "250.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdParabolaSegment tall boundary (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "251.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdEgg (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "252.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdEgg pointed (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "253.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "2": 0.01
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "sdEgg boundary (exact)",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "254.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "building profiles remain inside declared ranges",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "255.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "facade filtering: range, periodicity, large-footprint mean",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "256.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "water wave derivatives and finite-depth dispersion",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "257.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "dielectric Fresnel: bounds, normal incidence, reciprocity, TIR",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "258.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "Beer transmittance: bounds, zero path, semigroup",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "259.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "hash ranges and integer-input semantics",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "260.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "valueNoiseD derivative matches finite difference",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "261.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "gradientNoiseD derivative matches finite difference",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "262.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "curlNoise is divergence-free",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "263.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "simplexNoiseD derivative matches finite difference, |value| <= 1",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "264.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "gradientNoiseD 3D matches gradientNoise and finite differences",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "265.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "curlNoise 3D is divergence-free",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "266.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "turbulence and billowFbm stay in [0,1]",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "267.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "hybridTerrainHeight: finite bounded output and safe octave limits",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "268.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "noise and fbm ranges",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "269.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "voronoi: F1 <= F2, border distance non-negative",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "270.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "hexGrid ids are integers and local stays inside the hexagon",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "271.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "smooth unions never exceed min and match it far apart",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "272.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "domain transforms preserve distances",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "273.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "domPolarPair matches a search over every sector",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "274.metal",
+      "width": 128
+    },
+    {
+      "allow": {},
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "intersectors agree with SDFs",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "275.metal",
+      "width": 128
+    },
+    {
+      "allow": {
+        "1": 0.002
+      },
+      "failureBits": {
+        "1": 0,
+        "128": 0,
+        "16": 0,
+        "2": 0,
+        "32": 0,
+        "4": 0,
+        "64": 0,
+        "8": 0
+      },
+      "height": 128,
+      "kind": "property",
+      "name": "cameraMatrix is orthonormal",
+      "nonfinite": 0,
+      "pass": true,
+      "samples": 16384,
+      "source": "276.metal",
+      "width": 128
+    },
+    {
+      "height": 360,
+      "image": "alpine-valley.png",
+      "kind": "render",
+      "meanAbsRGB": 0.5613086659547494,
+      "name": "alpine-valley",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "277.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "alpine-valley--debug_mode-1.png",
+      "kind": "render",
+      "meanAbsRGB": 0.36594180276296995,
+      "name": "alpine-valley--debug_mode-1",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "278.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "alpine-valley--debug_mode-2.png",
+      "kind": "render",
+      "meanAbsRGB": 0.6096057215441208,
+      "name": "alpine-valley--debug_mode-2",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "279.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "alpine-valley--debug_mode-3.png",
+      "kind": "render",
+      "meanAbsRGB": 0.42134408911499427,
+      "name": "alpine-valley--debug_mode-3",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "280.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "alpine-valley--debug_mode-4.png",
+      "kind": "render",
+      "meanAbsRGB": 0.40794253647768225,
+      "name": "alpine-valley--debug_mode-4",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "281.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water.png",
+      "kind": "render",
+      "meanAbsRGB": 0.6084885174689245,
+      "name": "coastal-water",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "282.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--quality-1.png",
+      "kind": "render",
+      "meanAbsRGB": 0.6088842602675194,
+      "name": "coastal-water--quality-1",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "283.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--quality-3.png",
+      "kind": "render",
+      "meanAbsRGB": 0.6091365233849717,
+      "name": "coastal-water--quality-3",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "284.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--debug_mode-1.png",
+      "kind": "render",
+      "meanAbsRGB": 0.26721892963901583,
+      "name": "coastal-water--debug_mode-1",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "285.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--debug_mode-2.png",
+      "kind": "render",
+      "meanAbsRGB": 0.5498537597170636,
+      "name": "coastal-water--debug_mode-2",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "286.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--debug_mode-3.png",
+      "kind": "render",
+      "meanAbsRGB": 0.11403565652796664,
+      "name": "coastal-water--debug_mode-3",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "287.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--debug_mode-4.png",
+      "kind": "render",
+      "meanAbsRGB": 0.44620435794675795,
+      "name": "coastal-water--debug_mode-4",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "288.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--debug_mode-5.png",
+      "kind": "render",
+      "meanAbsRGB": 0.24665845200162342,
+      "name": "coastal-water--debug_mode-5",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "289.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "coastal-water--debug_mode-6.png",
+      "kind": "render",
+      "meanAbsRGB": 0.5373095754964581,
+      "name": "coastal-water--debug_mode-6",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "290.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "noise-progression.png",
+      "kind": "render",
+      "meanAbsRGB": 0.4463922650310535,
+      "name": "noise-progression",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "291.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "noise-terrain-map.png",
+      "kind": "render",
+      "meanAbsRGB": 0.4764414669780375,
+      "name": "noise-terrain-map",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "292.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "ocean.png",
+      "kind": "render",
+      "meanAbsRGB": 0.4404019846759352,
+      "name": "ocean",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "293.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "pattern-swatches.png",
+      "kind": "render",
+      "meanAbsRGB": 0.4689098819691282,
+      "name": "pattern-swatches",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "294.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "procedural-city.png",
+      "kind": "render",
+      "meanAbsRGB": 0.4355293074508912,
+      "name": "procedural-city",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "295.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "procedural-city--debug_mode-2.png",
+      "kind": "render",
+      "meanAbsRGB": 0.5224102571816615,
+      "name": "procedural-city--debug_mode-2",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "296.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "procedural-city--debug_mode-3.png",
+      "kind": "render",
+      "meanAbsRGB": 0.38914603794252295,
+      "name": "procedural-city--debug_mode-3",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "297.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "procedural-city--debug_mode-4.png",
+      "kind": "render",
+      "meanAbsRGB": 0.2961202009016466,
+      "name": "procedural-city--debug_mode-4",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "298.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "procedural-city--debug_mode-5.png",
+      "kind": "render",
+      "meanAbsRGB": 0.277273902645281,
+      "name": "procedural-city--debug_mode-5",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "299.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "raymarch-sdf.png",
+      "kind": "render",
+      "meanAbsRGB": 0.7029112681333424,
+      "name": "raymarch-sdf",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "300.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "sdf-2d-poster.png",
+      "kind": "render",
+      "meanAbsRGB": 0.27573363218130414,
+      "name": "sdf-2d-poster",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "301.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "terrain.png",
+      "kind": "render",
+      "meanAbsRGB": 0.660205141377756,
+      "name": "terrain",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "302.metal",
+      "width": 640
+    },
+    {
+      "height": 360,
+      "image": "volumetric-clouds.png",
+      "kind": "render",
+      "meanAbsRGB": 0.7353438328773094,
+      "name": "volumetric-clouds",
+      "nonfinite": 0,
+      "pass": true,
+      "source": "303.metal",
+      "width": 640
+    }
+  ],
+  "sourceState": "inputs.json is authoritative; the commit can precede local edits",
+  "status": "passed",
+  "validation": true,
+  "xcode": "Xcode 27.1\nBuild version 27A9275"
+}

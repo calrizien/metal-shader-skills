@@ -1,13 +1,13 @@
 ---
-description: "Port a GLSL ES 1.00 (WebGL1) shader with gl_FragColor, texture2D, #version, custom uniforms and a sine hash to Shadertoy GLSL ES 3.00."
+description: "Port a GLSL ES 1.00 (WebGL1) shader with gl_FragColor, texture2D, #version, custom uniforms and a sine hash to Metal Shading Language 4.0."
 tags: [positive, repair]
-expected_outcome: "final.glsl is a Shadertoy mainImage shader that samples iChannel0 with texture(), declares no uniforms or varyings, and has no gl_FragColor, texture2D, #version or sine hash."
+expected_outcome: "final.metal is a native MSL 4.0 fragment shader with explicit constant buffer, texture and sampler bindings; it contains no GLSL I/O or sine hash."
 max_turns: 40
 timeout_seconds: 900
 allowed_tools: [Read, Glob, Grep, Skill, Write, Edit, Bash]
 ---
 
-Can you port this old WebGL1 fragment shader to Shadertoy (GLSL ES 3.00)? I'll bind the texture to iChannel0. Keep the look the same. Save the paste-ready result as `final.glsl`.
+Can you port this old WebGL1 fragment shader to Metal 4 (MSL 4.0)? Use texture slot 0 and sampler slot 0. Use fullscreenVertex and shaderFragment entry functions, with explicit constant-buffer uniforms. Keep the look the same. Save the standalone result as `final.metal`.
 
 ```glsl
 #version 100

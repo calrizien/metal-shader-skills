@@ -1,0 +1,24 @@
+name: Metal 4 GPU verification
+
+# Use a trusted Apple silicon Mac with the Metal 4 GPU exposed.
+# Hosted macOS compilation is a separate check.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gpu:
+    runs-on: [self-hosted, macOS, ARM64, metal4]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run native Metal 4 verification
+        run: python3 tests/run_metal.py --size 640x360
+      - name: Upload native proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gpu
+          path: build/metal-e2e/

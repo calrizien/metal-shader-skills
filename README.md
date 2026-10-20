@@ -1,211 +1,141 @@
-# Shader Skills
+# Metal Shader Skills
 
-A skill that teaches coding agents to write procedural GLSL shaders that compile on the first try and look
-intentional. It works with Claude Code, Codex, Cursor, Copilot, Gemini and others. It pairs a shader-craft
-workflow with a **verified GLSL building-block library**: 186 functions across 20 modules, each one compiled in
-WebGL2 and numerically tested on the GPU. A bundler inlines exactly the functions a shader uses, so the result
-pastes straight into Shadertoy.
+Procedural shader art for **Metal 4**, written in **Metal Shading Language 4.0**.
+A fork of [gokayfem/shader-skills](https://github.com/gokayfem/shader-skills), with
+native MSL code, an Apple compiler check, and a renderer that uses the Metal 4 API.
+
+The installable `metal-shader-art` skill helps coding agents create SDF scenes,
+noise, terrain, water, clouds, lighting, and color. It includes 20 library modules,
+11 scene templates, subject guides, a dependency bundler, and native previews.
+The upstream MIT license and technique credits are preserved.
 
 | | | |
 |---|---|---|
-| [![Studio still life](gallery/raymarch-sdf.png)](gallery/raymarch-sdf.glsl) | [![Eroded mountains](gallery/terrain.png)](gallery/terrain.glsl) | [![Cumulus clouds](gallery/volumetric-clouds.png)](gallery/volumetric-clouds.glsl) |
-| SDF still life: smooth blends with blended materials, PBR, soft shadows, AO, AgX | Eroded terrain under a physically based sky with aerial perspective | Volumetric cumulus: energy-conserving integration, Beer-Powder, dual-lobe phase |
-| [![Dusk poster](gallery/sdf-2d-poster.png)](gallery/sdf-2d-poster.glsl) | [![Pattern swatches](gallery/pattern-swatches.png)](gallery/pattern-swatches.glsl) | [![Open ocean](gallery/ocean.png)](gallery/ocean.glsl) |
-| 2D distance-field poster: Oklab gradients, polar leaves, Bézier trunks | Texture-free materials: warped marble, Voronoi cracks, hex tiles, Truchet, filtered checker | Ocean: dispersive waves with analytic curvature foam, Fresnel sky, glitter path widening with distance |
+| [![Still life](gallery/raymarch-sdf.png)](gallery/raymarch-sdf.metal) | [![Alpine valley](gallery/alpine-valley.png)](gallery/alpine-valley.metal) | [![Clouds](gallery/volumetric-clouds.png)](gallery/volumetric-clouds.metal) |
+| SDF modeling and PBR light | Eroded terrain and atmosphere | Volumetric integration |
+| [![Poster](gallery/sdf-2d-poster.png)](gallery/sdf-2d-poster.metal) | [![Patterns](gallery/pattern-swatches.png)](gallery/pattern-swatches.metal) | [![Coastal water](gallery/coastal-water.png)](gallery/coastal-water.metal) |
+| 2D distance fields | Procedural materials | Refraction, absorption, foam |
 
-Each image links to its paste-ready shader. The sources are in [`skills/shader-art-coding/templates/`](skills/shader-art-coding/templates/).
-
-## Why
-
-Agents write shaders blind: they cannot see the output, they misremember formulas, and WebGL rejects code that
-desktop GLSL accepts. Common results are struct ternaries, sine hashes that differ per GPU, SDFs with wrong signs,
-double gamma, and fog that ignores the sky. This skill closes those gaps:
-
-- **Tested building blocks instead of recalled ones.** Every SDF is checked on the GPU:
-  - the Lipschitz bound (safe to raymarch);
-  - exactness, by projecting points onto the surface;
-  - inside/outside signs;
-  - for curves, agreement with brute-force distance.
-
-  Noise derivatives are checked against finite differences, curl noise for zero divergence, color transforms for
-  round trips, and intersectors against their SDFs.
-- **A bundler,** so the agent writes `sdRoundCone(...)`, `softShadow(...)`, `tonemapAgX(...)` by name and ships one
-  self-contained file.
-- **A checker** that catches WebGL1 leftovers, sine hashes, `#version` lines and missing `mainImage`, and compiles
-  with glslangValidator.
-- **A workflow** with a fixed debug-mode convention, so problems are inspected as fields rather than guessed at.
-- **Routing** from subjects ("a jellyfish", "snowy mountains") to techniques, templates and formulas.
+The gallery images are native Metal renders. Each image links to a complete
+`.metal` bundle. Editable scene inputs are in
+[`skills/metal-shader-art/templates/`](skills/metal-shader-art/templates/).
 
 ## Install
 
-**Claude Code** (plugin marketplace):
+With the skills CLI:
 
-```bash
-claude plugin marketplace add gokayfem/shader-skills
+```sh
+npx skills add calrizien/metal-shader-skills
 ```
 
-```bash
-claude plugin install shader-skills@shader-skills
+For Codex, copy the skill directory into your skill location:
+
+```sh
+mkdir -p ~/.agents/skills
+cp -R skills/metal-shader-art ~/.agents/skills/
 ```
 
-Or copy the skill: `cp -R skills/shader-art-coding ~/.claude/skills/`.
+For Claude Code:
 
-**Codex, Cursor, Gemini CLI, Copilot and about 70 other agents** (via [skills](https://github.com/vercel-labs/skills)):
-
-```bash
-npx skills add gokayfem/shader-skills
+```sh
+claude plugin marketplace add calrizien/metal-shader-skills
+claude plugin install metal-shader-skills@metal-shader-skills
 ```
 
-Or install by hand:
-- **Codex:** copy `skills/shader-art-coding` to `~/.agents/skills/`.
-- **Cursor:** copy it to `~/.cursor/skills/`, plus the rule in `adapters/cursor/`.
-- **Copilot:** `gh skill install gokayfem/shader-skills shader-art-coding`, plus `adapters/copilot/`.
-- **Gemini CLI:** `gemini extensions install https://github.com/gokayfem/shader-skills`.
-- **Hermes:** copy it to `~/.hermes/skills/`.
-
-**claude.ai:** zip `skills/shader-art-coding` and upload it under Settings > Capabilities > Skills.
-
-**ChatGPT, Gemini Gems and other chat tools:** see [`adapters/`](adapters/).
+For manual Claude installation, copy the directory to `~/.claude/skills/`.
+Cursor, Copilot, and chat adapters are in [`adapters/`](adapters/).
 
 ## Use
 
-Ask naturally: *"Make a Shadertoy shader of a glass jellyfish drifting through god rays"*, or *"why does my
-raymarcher have holes?"* The skill routes the request, then the agent finds blocks, writes the shader, bundles it
-and checks it:
+Ask: *“Use metal-shader-art to make a Metal 4 shader of a glass sculpture under
+soft studio light.”* Or: *“Port this GLSL landscape to MSL 4.0 and show a native
+render.”*
 
-```bash
-python3 scripts/glsl_tools.py search petal leaf
-python3 scripts/glsl_tools.py bundle jellyfish.glsl -o jellyfish.out.glsl
-python3 scripts/glsl_tools.py check jellyfish.out.glsl
+From the installed skill directory:
+
+```sh
+python3 scripts/metal_tools.py search terrain noise
+python3 scripts/metal_tools.py bundle templates/raymarch-sdf.metal -o final.metal
+python3 scripts/metal_tools.py check final.metal
+python3 scripts/metal_tools.py render final.metal --output build/preview --size 640x360 --time 1.2
 ```
 
-What the commands do:
-- `search` ranks functions by name, summary and `@use` tags.
-- `bundle` resolves dependencies transitively and emits them in declaration order.
-- `check` lints the file and compiles it when `glslangValidator` is installed (`brew install glslang` or
-  `apt install glslang-tools`).
+`search` finds functions by name and use. `bundle` includes the required helpers
+and emits native `fullscreenVertex` and `shaderFragment` entry functions.
+`check` uses Apple's compiler with `-std=metal4.0`; a missing compiler is a
+failure. `render` saves a PNG, generated MSL, full diagnostics, and a JSON receipt.
+Use `check --lint-only` only when a static check is the intended result.
 
-## What's in the library
+Compilation needs Xcode 26 or later and the Metal Toolchain. Native rendering
+needs an Apple silicon Mac with macOS 26 or later and a Metal 4 GPU. The scripts
+use Python's standard library. They do not need a browser or an API key.
 
-| Module | Highlights |
+## What changed from upstream
+
+| Area | Metal fork |
 |---|---|
-| `hash` | PCG integer hashes (`pcg3d`, `pcg4d`): bit-exact across GPUs, no sine; safe integer-input float wrappers |
-| `noise` | value, gradient and 2D simplex noise with analytic derivatives, fBm, eroded/ridged/billow fBm, two-level domain warp, hybrid terrain height, curl noise, Voronoi (F1/F2, borders, smooth), interleaved-gradient and R2 dithering |
-| `pattern` | box-filtered checker, grid and stripes (alias-free with no supersampling), hex grid with edge distance, Truchet |
-| `sdf3d` | 22 primitives including exact capped cone, round cone, cut and hollow spheres, death star, hex prism, link, gyroid, 3D Bézier tube |
-| `sdf2d` | 16 primitives including vesica, moon, heart, star, regular polygon, rounded box with per-corner radii, quadratic Bézier |
-| `operators` | smooth min/max/subtract (quadratic and C2 cubic), smooth union with material blend weight, chamfer, stairs, engrave, round, onion, extrude, revolve, exact elongate |
-| `domain` | repetition (infinite, limited, mirrored), polar sectors, folds, twist and bend with their Lipschitz corrections |
-| `architecture` | stable parcel-based building dimensions/roof IDs, box-filtered facade windows that converge to opening area |
-| `raymarch` | sphere tracing with distance-relative hit threshold, tetrahedral normals, improved soft shadows, AO, thickness; WebGL-safe loops |
-| `shading` | GGX + height-correlated Smith + Schlick, metallic-roughness `shadePBR`, environment BRDF approximation, wrap diffuse, translucency, rim |
-| `water` | finite-depth dispersion, analytic wave height/slope/curvature, exact dielectric Fresnel including TIR, RGB Beer-Lambert attenuation |
-| `color` / `tonemap` | exact sRGB curves, Oklab / OkLCh mixing, blackbody colors; AgX (default), AgX punchy, Khronos PBR Neutral, ACES fitted, Reinhard |
-| `volume` / `atmosphere` | HG, dual-lobe, Rayleigh and Cornette-Shanks phase, energy-conserving `volumeStep`, Beer-Powder, analytic height fog; physically based single-scattering sky, sun disk with limb darkening |
-| `camera` / `intersect` / `post` / `debug` | look-at, thin-lens DOF, ortho; analytic sphere/box/plane hits; AA helpers, R2 supersampling offsets, cos⁴ vignette, grain, TPDF dither; distance, normal, id and heat debug views |
+| Language | Native `floatN`/`floatNxN`, MSL references, arrays, texture sampling |
+| Scene entry | `shade(thread float4 &, float2)` inside a thread-local scene object |
+| Output | Complete native Metal vertex and fragment functions |
+| Uniforms | Explicit 16-byte buffer: resolution, time, frame |
+| Compiler | `xcrun metal -std=metal4.0`, safe math |
+| Renderer | MTL4 compiler, queue, command buffer, allocator, argument table, residency set |
+| Validation | Original numerical GPU properties, native floating-point image checks, PNGs and hashes |
+| Packaging | Metal skill name, plugin manifests, adapters, guides, and macOS CI |
 
-The full catalog with signatures, exactness and uses is
-[`references/library-index.md`](skills/shader-art-coding/references/library-index.md).
+Read the [Metal 4 integration guide](skills/metal-shader-art/references/metal4-integration.md)
+for resource lifetime, synchronization, buffer layout, texture binding, and color.
+MSL 4.0 is the explicit baseline even though Apple's linked specification is now 4.1.
+The host API and language version are separate requirements.
 
-## Noise: from a first field to a game use case
+## Library
 
-The [noise learning guide](skills/shader-art-coding/references/noise-use-cases.md) covers all ten entries in the
-Noise Learning Progression reference: what each means, where its code lives, when to use it, tuning, and links to
-author-maintained external implementations. It includes eleven compile-checked recipes and two complete shaders.
+The [function index](skills/metal-shader-art/references/library-index.md) contains
+signatures, use cases, and SDF exactness tags. The modules cover:
 
-| Technique | Call the library | Use it for |
-|---|---|---|
-| Perlin-style gradient | `gradientNoise`, `gradientNoiseD` | Broad hills, weather masks, surface normals |
-| Voronoi | `voronoiBorder`, `smoothVoronoi` | Rock plates, constant-width cracks, cell walls |
-| Simplex | `simplexNoise`, `simplexNoiseD` | Ripples, rotating-gradient flow, churning lava |
-| Fractal / fBm | `fbm`, `erodedFbm` | Multiscale terrain, clouds, slope-damped detail |
-| Domain warp | `warpedFbm` | Marble, agate, distorted terrain and cloud bands |
-| Value | `valueNoise`, `valueNoiseD` | Cheap smooth masks; quantize inputs for retro blocks |
-| Cellular / Worley | `voronoi` F1/F2 and cell IDs | Biome regions, foam, per-stone variation |
-| Ridged | `ridgedFbm` | Mountain crests, canyons, rocky veins |
-| Billow | `billowFbm` | Puffy smoke, cumulus lobes, rounded terrain |
-| Hybrid | `hybridTerrainHeight` | Bounded heightmaps combining warped hills, ridges and cells |
+- Integer hashes, value/gradient/simplex noise, fBm, warping, Voronoi and curl noise.
+- 2D and 3D distance fields, blends, repetition, deformation and raymarching.
+- Procedural buildings, terrain, water waves, Fresnel and absorption.
+- PBR light, atmosphere, volume integration, cameras and intersections.
+- Linear/sRGB color, Oklab, tone mapping, antialiasing and debug views.
 
-These functions are in [`noise.glsl`](skills/shader-art-coding/glsl/noise.glsl). Voronoi and Worley refer to the
-same cellular family here; fBm and domain warping compose base fields. Simplex performance depends on implementation
-and target hardware. The guide distinguishes smooth value noise from blocky hashes and designed river masks from
-hydrological simulation.
-
-| [![Ten noise studies](gallery/noise-progression.png)](gallery/noise-progression.glsl) | [![Hybrid terrain and river relief map](gallery/noise-terrain-map.png)](gallery/noise-terrain-map.glsl) |
-|---|---|
-| Top: gradient, Voronoi borders, simplex, fBm, marble warp. Bottom: smooth value, F2−F1 cellular, ridged, billow, hybrid. | Putting it together: warped hills, ridged mountains, cellular breakup, slope-based materials and a designed river channel. |
-
-Click a preview for the standalone Shadertoy shader. Editable sources:
-[`noise-progression.glsl`](skills/shader-art-coding/templates/noise-progression.glsl) and
-[`noise-terrain-map.glsl`](skills/shader-art-coding/templates/noise-terrain-map.glsl).
-
-## Procedural buildings, terrain and water
-
-Three complete, texture-free starting points cover construction, landscape and shallow-water optics. Each has
-art controls, inspectable debug modes, a standalone Shadertoy bundle and a rendered preview.
-
-| [![Procedural city](gallery/procedural-city.png)](gallery/procedural-city.glsl) | [![Alpine valley](gallery/alpine-valley.png)](gallery/alpine-valley.glsl) | [![Refractive coastal water](gallery/coastal-water.png)](gallery/coastal-water.glsl) |
-|---|---|---|
-| Parcel-based masses, podiums/setbacks, varied roofs, filtered occupied windows, AO, shadows and height fog. | Designed valley, eroded/ridged terrain, snow by slope/altitude, rock strata, grass and atmospheric depth. | Analytic waves, refracted seabed, reflected land, exact Fresnel, RGB depth absorption, shore foam and three quality presets. |
-
-- **[Procedural buildings](skills/shader-art-coding/references/procedural-buildings.md):** massing hierarchy,
-  deterministic parcels, neighbor-safe repetition, facade filtering, geometry versus material detail, and mesh/engine integration.
-- **[Terrain production](skills/shader-art-coding/references/terrain-production.md):** heightfields versus density,
-  silhouette/detail separation, primary-trace refinement, biome masks, chunk coordinates, seams and LOD.
-- **[Water quality](skills/shader-art-coding/references/water-quality.md):** shallow coast versus open ocean,
-  reflection/refraction paths, finite-depth waves, filtering, quality presets, and the extra renderer/simulation
-  systems needed for film or production water. The existing [open-ocean shader](gallery/ocean.glsl) remains available.
-
-The coastal example uses `QUALITY` 1/2/3 for sky reflection, reflected-land rays, and a four-sample still preset
-with more waves/steps. It is a single-pass visual study: foam, in-scattering and caustics include artistic
-approximations; it does not simulate breaking surf or FFT ocean spectra. The guides identify implemented features
-and limits rather than promising a universal “highest quality” or frame rate.
-
-Sources are in [`templates/`](skills/shader-art-coding/templates/). Bundle with `glsl_tools.py bundle` as above.
-All three water presets and every annotated diagnostic view are compiled and rendered by the harness.
+The scene adapter uses bottom-left pixel coordinates and converts Metal's
+viewport origin once. Templates encode sRGB manually and need a non-sRGB output
+target. For an `_sRGB` attachment, remove the manual encoding.
 
 ## Verification
 
-| Check | Where | What it proves |
-|---|---|---|
-| Lint + drift | `glsl_tools.py check` | docs and tags on every function, module order, no WebGL1 or sine-hash patterns, reference snippets identical to the library |
-| glslang compile | CI (`checks.yml`) | every library module, reference snippet and template compiles as GLSL ES 3.00 |
-| WebGL2 compile | `tests/` harness | all library/reference/template units and annotated quality/debug variants compile under ANGLE, which also enforces WebGL-only rules |
-| GPU property tests | `tests/properties.py` | 90 tests × 16,384 samples: Lipschitz, exactness, signs, brute-force curve distance, derivatives, divergence, ranges, round trips, facade filtering, water dispersion/Fresnel/attenuation |
-| Renders | harness + gallery | 11 beauty templates plus 16 quality/debug variants; no NaNs or black frames; beauty PNGs saved to `gallery/` |
-| Bundler regressions | `tests/test_bundler.py` | conditional quality macros cannot hide dependencies; annotated variants replace the intended define and reject missing defines |
-| Skill effect | `evals/` (`claude plugin eval`, paid, manual) | output-rule adherence with the skill vs without it on 6 shader tasks, plus no false triggers on 3 near-miss tasks; see [evals/README.md](evals/README.md) |
+Run from the repository root:
 
-Run it locally: `python3 tests/build_harness.py && python3 tests/serve.py`, then open
-`http://127.0.0.1:8765/build/harness.html`. Headless: `python3 tests/run_webgl.py` (needs Playwright).
-
-## Conventions
-
-- `#define DEBUG_MODE 0`: 0 final, 1 distance field, 2 normals, 3 ids, 4 steps, 5 masks, 6 lighting terms.
-- Scene contract `vec2 map(vec3 p)` returns `vec2(distance, materialId)`.
-- Color pipeline:
-  1. Light in linear color.
-  2. Apply exposure.
-  3. Tonemap each AA sample.
-  4. Average the samples.
-  5. Encode once with `linearToSrgb`.
-  6. Dither.
-
-## Repository
-
-```text
-skills/shader-art-coding/   the skill: SKILL.md, glsl/ library, templates/, references/, scripts/glsl_tools.py
-tests/                      WebGL2 harness, GPU property tests, gallery builder, headless runner
-evals/                      plugin eval suite: with vs without the skill
-gallery/                    rendered templates and paste-ready bundles
-adapters/                   prompts for tools without skill support
-.claude-plugin/             Claude Code plugin + marketplace manifests
+```sh
+python3 skills/metal-shader-art/scripts/metal_tools.py index --check
+python3 tests/build_gallery.py --check
+python3 skills/metal-shader-art/scripts/metal_tools.py check
+python3 tests/check_evals.py
+python3 tests/run_metal.py --size 640x360 --save-gallery
 ```
 
-Contributing: see [AGENTS.md](AGENTS.md) for the rules every library change must pass.
+The native suite compiles library modules, reference definitions, templates, and
+annotated variants. It runs **90 GPU property cases with 16,384 samples each**
+and **27 renders**. The properties retain upstream tolerances. The renderer uses
+Metal API validation, checks float pixels for NaN/infinity and empty output,
+then saves PNGs. The [receipt](verification/metal-results.json) and
+[source hashes](verification/inputs.json) identify the tested state. Full
+sources and diagnostics remain in the local `build/` output.
 
-## Credits and license
+[CI](.github/workflows/checks.yml) compiles MSL on a macOS arm64 runner. Native GPU
+CI is an optional [manual workflow](.github/workflows/metal-gpu.yml) for a trusted
+self-hosted Mac. A hosted compiler check does not prove GPU execution.
+[Model evaluation cases](evals/README.md) are prepared and format-checked;
+paid model evaluations have not been run for this fork.
 
-MIT. Every function is an original implementation of a published technique. The sources are listed in
-[CREDITS.md](CREDITS.md): Inigo Quilez's articles, hg_sdf, Jarzynski & Olano's GPU hash study, Hillaire's
-atmosphere and volume work, AgX, Khronos PBR Neutral, Oklab and others.
+This is a procedural fragment-art library. It does not establish iOS/visionOS
+runtime, SwiftUI stitchable shader, RealityKit material, ML/tensor, mesh, or
+ray-tracing integration. Those targets need their own host contracts and checks.
+
+## License and source
+
+[MIT](LICENSE). Based on upstream commit
+[`e09bc993`](https://github.com/gokayfem/shader-skills/commit/e09bc993bf04201f26c03c87c89210e9b472f526).
+See [CREDITS.md](CREDITS.md) for authors and technique sources. Apple documentation
+is linked; the specification PDF is not redistributed.

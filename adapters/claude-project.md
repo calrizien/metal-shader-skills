@@ -1,14 +1,14 @@
-# Claude (claude.ai Projects)
+# Metal 4 shader art
 
-Prefer the skill: zip the `skills/shader-art-coding/` folder and upload it under **Settings > Capabilities > Skills**.
-Claude then loads `SKILL.md`, the references and the library on demand, and can run `scripts/glsl_tools.py` in its
-code environment to bundle and check shaders.
+Use the `metal-shader-art` skill from
+[calrizien/metal-shader-skills](https://github.com/calrizien/metal-shader-skills).
+Target MSL 4.0 and native Metal entry functions.
 
-Without skills, use a Project:
+Read `SKILL.md`, then only the references needed for the subject. Search the
+library with `scripts/metal_tools.py search`, bundle with `bundle`, compile with
+`check`, and inspect a native preview with `render`.
 
-1. Paste `adapters/universal-system-prompt.md` (the part below the line) into the project instructions.
-2. Add to project knowledge: `references/library-index.md`, `references/subject-routing.md`,
-   `references/sdf-library-guide.md`, `references/rendering-pipeline.md`, and the `glsl/*.glsl` files.
-3. Add: "Copy library functions verbatim with their dependencies instead of rewriting them."
-
-For Claude Code, install the plugin or copy the skill folder (see the repository README).
+Use explicit constant buffers, MSL vector types, correct address spaces, and
+the documented color/coordinate contract. Preserve debug views and keep
+compile, numerical GPU, and visual proof separate. If tools are unavailable,
+state that the corresponding check was not run.

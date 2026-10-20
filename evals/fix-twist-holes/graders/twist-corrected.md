@@ -2,10 +2,10 @@
 type: llm
 focus:
   source: file
-  path: final.glsl
+  path: final.metal
 ---
 
-The file is a Shadertoy shader that raymarches a box twisted around the Y axis. The original set TWIST = 3.0 radians per unit of height and stepped the full distance returned by map(), which overshoots because the twist raises the field's Lipschitz constant above 1, so the surface showed holes.
+The file is a Metal 4 shader that raymarches a box twisted around the Y axis. The original set TWIST = 3.0 radians per unit of height and stepped the full distance returned by map(), which overshoots because the twist raises the field's Lipschitz constant above 1, so the surface showed holes.
 
 PASS if both hold:
 - The twist is still applied at 1.5 radians per unit of height or more.

@@ -1,9 +1,14 @@
-# Gemini Gem
+# Metal 4 shader art
 
-1. Create a Gem and paste `adapters/universal-system-prompt.md` (the part below the line) into its instructions.
-2. Add as knowledge files: `references/library-index.md`, `references/subject-routing.md`,
-   `references/sdf-library-guide.md`, `references/rendering-pipeline.md` and the `glsl/*.glsl` files from
-   `skills/shader-art-coding/` (rename to `.txt` if needed).
-3. Tell the Gem to copy library functions verbatim with their dependencies instead of rewriting them.
+Use the `metal-shader-art` skill from
+[calrizien/metal-shader-skills](https://github.com/calrizien/metal-shader-skills).
+Target MSL 4.0 and native Metal entry functions.
 
-For Gemini CLI, install the skill directly (see the repository README); the CLI reads `SKILL.md` folders.
+Read `SKILL.md`, then only the references needed for the subject. Search the
+library with `scripts/metal_tools.py search`, bundle with `bundle`, compile with
+`check`, and inspect a native preview with `render`.
+
+Use explicit constant buffers, MSL vector types, correct address spaces, and
+the documented color/coordinate contract. Preserve debug views and keep
+compile, numerical GPU, and visual proof separate. If tools are unavailable,
+state that the corresponding check was not run.

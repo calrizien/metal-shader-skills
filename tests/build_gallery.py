@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write gallery/<template>.glsl: each template bundled with its library dependencies, ready to paste into Shadertoy.
+"""Write gallery/<template>.metal: each template bundled with its library dependencies, ready for Metal 4.
 
   python3 tests/build_gallery.py           regenerate
   python3 tests/build_gallery.py --check   fail if any bundle is stale (CI)
@@ -11,9 +11,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "skills" / "shader-art-coding" / "scripts"))
+sys.path.insert(0, str(ROOT / "skills" / "metal-shader-art" / "scripts"))
 
-import glsl_tools as gt  # noqa: E402
+import metal_tools as gt  # noqa: E402
 
 
 def main() -> int:
@@ -22,8 +22,8 @@ def main() -> int:
     out_dir = ROOT / "gallery"
     out_dir.mkdir(exist_ok=True)
     stale = []
-    for tpl in sorted(gt.TEMPLATE_DIR.glob("*.glsl")):
-        text = gt.bundle_source(lib, tpl.read_text(encoding="utf-8"))
+    for tpl in sorted(gt.TEMPLATE_DIR.glob("*.metal")):
+        text = gt.shader_unit(lib, tpl.read_text(encoding="utf-8"))
         target = out_dir / tpl.name
         if check:
             if not target.exists() or target.read_text(encoding="utf-8") != text:

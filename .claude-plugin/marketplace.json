@@ -1,14 +1,22 @@
 {
-  "name": "shader-skills",
-  "description": "Procedural shader art skills for coding agents",
-  "owner": { "name": "gokayfem", "url": "https://github.com/gokayfem" },
+  "name": "metal-shader-skills",
+  "description": "Procedural Metal 4 shader skills",
+  "owner": {
+    "name": "calrizien",
+    "url": "https://github.com/calrizien"
+  },
   "plugins": [
     {
-      "name": "shader-skills",
+      "name": "metal-shader-skills",
       "source": "./",
-      "description": "Procedural GLSL / Shadertoy shaders with a verified building-block library",
+      "description": "Procedural MSL 4.0 shader art for Metal 4: function library, native renderer, compiler checks, templates, and integration guidance.",
       "category": "development",
-      "tags": ["glsl", "shadertoy", "webgl", "sdf", "raymarching"]
+      "tags": [
+        "metal",
+        "msl",
+        "shader",
+        "sdf"
+      ]
     }
   ]
 }

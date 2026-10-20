@@ -1,51 +1,39 @@
-name: checks
+name: Metal 4 checks
 
 on:
   push:
     branches: [main]
   pull_request:
 
-jobs:
-  static:
-    name: lint, drift, glslang compile
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Install glslang
-        run: sudo apt-get update && sudo apt-get install -y glslang-tools
-      - name: Library index is up to date
-        run: python3 skills/shader-art-coding/scripts/glsl_tools.py index --check
-      - name: Gallery bundles are up to date
-        run: python3 tests/build_gallery.py --check
-      - name: Lint, drift and compile every unit
-        run: python3 skills/shader-art-coding/scripts/glsl_tools.py check
-      - name: Eval suite matches the plugin-eval format
-        run: python3 tests/check_evals.py
-      - name: Bundler regressions
-        run: python3 -m unittest discover -s tests -p 'test_*.py'
+permissions:
+  contents: read
 
-  webgl:
-    name: WebGL2 compile, GPU property tests, renders
-    runs-on: ubuntu-24.04
+jobs:
+  compile:
+    name: MSL 4.0 compile and package checks
+    runs-on: macos-26
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install Playwright Chromium
+      - name: Locate the Metal compiler
         run: |
-          pip install playwright==1.49.1
-          python -m playwright install --with-deps chromium
-      - name: Run harness (SwiftShader)
-        run: python tests/run_webgl.py --size 320x180
-      - name: Upload results
+          xcodebuild -version
+          xcrun --find metal || xcodebuild -downloadComponent MetalToolchain
+          xcrun metal --version
+      - name: Check generated files
+        run: |
+          python3 skills/metal-shader-art/scripts/metal_tools.py index --check
+          python3 tests/build_gallery.py --check
+      - name: Compile every MSL unit
+        run: python3 skills/metal-shader-art/scripts/metal_tools.py check
+      - name: Validate model evaluation cases
+        run: python3 tests/check_evals.py
+      - name: Upload compiler diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: webgl-results
-          path: |
-            build/webgl-results.json
-            build/harness.html
+          name: metal-compile
+          path: build/metal-compile/
