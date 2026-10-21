@@ -6,7 +6,7 @@ applyTo: "**/*.metal"
 
 Use the `metal-shader-art` skill from
 [calrizien/metal-shader-skills](https://github.com/calrizien/metal-shader-skills).
-Target MSL 4.0 and native Metal entry functions.
+Target MSL 4.1 and native Metal entry functions.
 
 Read `SKILL.md`, then only the references needed for the subject. Search the
 library with `scripts/metal_tools.py search`, bundle with `bundle`, compile with

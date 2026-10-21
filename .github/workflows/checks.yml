@@ -10,8 +10,8 @@ permissions:
 
 jobs:
   compile:
-    name: MSL 4.0 compile and package checks
-    runs-on: macos-26
+    name: MSL 4.1 compile and package checks
+    runs-on: xcode-27
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
       - name: Locate the Metal compiler
         run: |
           xcodebuild -version
-          xcrun --find metal || xcodebuild -downloadComponent MetalToolchain
+          xcrun metal --version || xcodebuild -downloadComponent MetalToolchain
           xcrun metal --version
       - name: Check generated files
         run: |

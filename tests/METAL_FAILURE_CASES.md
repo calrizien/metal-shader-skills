@@ -5,7 +5,7 @@ oracle. Do not relax their tolerances to make the port pass.
 
 | Failure | Observable check |
 |---|---|
-| GLSL syntax remains, or MSL 4.1 is required | Compile every module, reference definition, template and annotated variant with `-std=metal4.0`. |
+| GLSL syntax remains, or the compiler cannot target MSL 4.1 | Compile every module, reference definition, template and annotated variant with `-std=metal4.1`. |
 | Reference parameters use the wrong address space | Compile the complete library, including camera and volume helpers that write through references. |
 | Matrix columns, negative modulo, boolean selection or integer hashes change | Run the existing GPU properties on Metal, with the same seeds, sample count and tolerances. |
 | A dependency is hidden behind a quality macro | Compile and render every annotated quality/debug variant. |
@@ -21,3 +21,9 @@ oracle. Do not relax their tolerances to make the port pass.
 The full E2E run must save its generated MSL, diagnostics, numerical failure
 counts, native PNGs, toolchain/device details and source hashes. Model skill
 evaluations are a separate check and must not be reported as run unless run.
+
+## MSL 4.1 baseline update
+
+- Offline and runtime compilation must both explicitly use MSL 4.1; compile all units and run the GPU suite, with the language recorded in its receipt.
+- An older SDK or OS must not silently select MSL 4.1; require Xcode 27 and macOS 27 for the native runner.
+- Generated bundles and installed copies must match the updated source; regenerate bundles and compare installation hashes.

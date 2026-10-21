@@ -12,17 +12,17 @@
 
 ## Baseline and sources
 
-Target **MSL 4.0** explicitly with `-std=metal4.0`, or
-`MTLCompileOptions.languageVersion = .version4_0`. Use Xcode 26 or later
-with its Metal Toolchain. The native runner targets macOS 26 and arm64.
+Target **MSL 4.1** explicitly with `-std=metal4.1`, or
+`MTLCompileOptions.languageVersion = .version4_1`. Use Xcode 27 or later
+with its Metal Toolchain. The native runner targets macOS 27 and arm64.
 Check OS availability and `device.supportsFamily(.metal4)` before creating
-Metal 4 objects. MSL 4.0 language support alone does not prove that a device
+Metal 4 objects. MSL 4.1 language support alone does not prove that a device
 supports every optional GPU feature.
 
-Apple's linked specification was version 4.1, dated June 4, 2026, when checked
-on October 20, 2026. Its section 1.6.10 gives separate `metal4.0` and `metal4.1`
-targets. This fork uses the 4.0 baseline. Do not adopt a 4.1-only feature without
-changing and checking the requested deployment target.
+Apple's current specification is version 4.1, dated June 4, 2026, checked on
+October 20, 2026. Section 1.6.10 specifies `metal4.1` for macOS 27, iOS 27,
+iPadOS 27, tvOS 27, and visionOS 27. Require a toolchain that accepts this
+standard; do not silently fall back to MSL 4.0.
 
 Primary sources:
 
@@ -89,7 +89,7 @@ Objective-C++ so its API calls match Apple's Metal headers directly.
 
 1. Create an `MTL4CommandQueue`, `MTL4Compiler`, `MTL4CommandBuffer`, and
    `MTL4CommandAllocator` from the device.
-2. Compile the MSL library with language version 4.0. Create
+2. Compile the MSL library with language version 4.1. Create
    `MTL4LibraryFunctionDescriptor` values for the vertex and fragment functions,
    then create a pipeline with `MTL4RenderPipelineDescriptor` and the compiler.
 3. Allocate a uniform buffer and target texture. Set the argument table's
@@ -171,7 +171,7 @@ display contract; these SDR examples do not prove an HDR path.
 
 ## Verification
 
-- `check` compiles with `xcrun -sdk macosx metal -std=metal4.0 -fno-fast-math`.
+- `check` compiles with `xcrun -sdk macosx metal -std=metal4.1 -fno-fast-math`.
   It fails if the compiler is absent. Full diagnostics stay in `build/metal-compile`.
 - `render` compiles and runs one complete bundle with Metal 4 and saves its MSL,
   PNG, and JSON receipt. Inspect the image.

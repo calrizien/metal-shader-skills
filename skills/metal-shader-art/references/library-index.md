@@ -35,7 +35,7 @@ Tags: **exact** is a true Euclidean distance, safe for blending, AO, shadows and
 
 ## common
 
-common: constants, rotation, remapping and shaping functions. Target: Metal Shading Language 4.0. Every function here is original and MIT licensed.
+common: constants, rotation, remapping and shaping functions. Target: Metal Shading Language 4.1. Every function here is original and MIT licensed.
 
 - `const float PI  = 3.14159265358979;`
 - `const float TAU = 6.28318530717959;`

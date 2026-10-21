@@ -2,7 +2,7 @@
   "name": "metal-shader-skills",
   "displayName": "Metal Shader Skills",
   "version": "1.0.0",
-  "description": "Procedural MSL 4.0 shader art for Metal 4: function library, native renderer, compiler checks, templates, and integration guidance.",
+  "description": "Procedural MSL 4.1 shader art for Metal 4: function library, native renderer, compiler checks, templates, and integration guidance.",
   "author": {
     "name": "calrizien",
     "url": "https://github.com/calrizien"

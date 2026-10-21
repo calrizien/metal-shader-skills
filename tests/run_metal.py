@@ -24,8 +24,8 @@ def main() -> int:
     parser.add_argument("--save-gallery", action="store_true")
     parser.add_argument("--output", type=Path, default=ROOT / "build/metal-e2e")
     args = parser.parse_args()
-    if platform.system() != "Darwin" or platform.machine() != "arm64":
-        parser.error("the runtime suite requires an Apple silicon Mac with Metal 4")
+    if platform.system() != "Darwin" or platform.machine() != "arm64" or int(platform.mac_ver()[0].split(".")[0]) < 27:
+        parser.error("the runtime suite requires an Apple silicon Mac with macOS 27+ and Metal 4")
     try:
         width, height = map(int, args.size.split("x"))
         if not 1 <= width <= 4096 or not 1 <= height <= 4096:
@@ -44,7 +44,7 @@ def main() -> int:
     runner = ROOT / "build/metal-runner"
     source = ROOT / "skills/metal-shader-art/scripts/metal_runner.mm"
     command = ["xcrun", "clang++", "-std=c++17", "-fobjc-arc", "-O2", "-arch", "arm64",
-               "-mmacosx-version-min=26.0", "-framework", "Foundation", "-framework", "Metal",
+               "-mmacosx-version-min=27.0", "-framework", "Foundation", "-framework", "Metal",
                "-framework", "CoreGraphics", "-framework", "ImageIO", str(source), "-o", str(runner)]
     compile_result = subprocess.run(command, text=True, capture_output=True, timeout=120)
     (output / "host-compile.log").write_text(compile_result.stdout + compile_result.stderr)

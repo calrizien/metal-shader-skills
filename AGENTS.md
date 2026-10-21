@@ -5,7 +5,7 @@ This is the Metal 4 fork of `gokayfem/shader-skills`. The installable skill is
 
 ## Source contract
 
-- Target MSL 4.0, not an implicit compiler default.
+- Target MSL 4.1, not an implicit compiler default.
 - `metal/` contains scene-member functions. The bundler puts selected helpers
   and the user scene inside `ShaderScene`, with native vertex/fragment entries.
 - Modules follow `MODULE_ORDER` in `scripts/metal_tools.py`.
@@ -29,7 +29,7 @@ python3 tests/run_metal.py --size 640x360 --save-gallery
 git diff --check
 ```
 
-The full runtime check uses an Apple silicon Mac with macOS 26+, Xcode 26+,
+The full runtime check uses an Apple silicon Mac with macOS 27+, Xcode 27+,
 the Metal Toolchain, and a Metal 4 GPU. It runs with Metal API validation.
 Inspect the native PNGs after visual changes. Preserve generated MSL, compiler
 logs, failure counts, and source hashes in `build/`; a successful gallery run

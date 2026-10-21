@@ -7,7 +7,7 @@ timeout_seconds: 900
 allowed_tools: [Read, Glob, Grep, Skill, Write, Edit, Bash]
 ---
 
-This Metal 4 shader is supposed to show a slowly orbiting twisted column, but the surface is full of holes and torn-looking bits, worst near the edges. Can you fix it without losing the twist? Save the fixed, standalone MSL 4.0 shader with fullscreenVertex and shaderFragment entry functions as `final.metal`.
+This Metal 4 shader is supposed to show a slowly orbiting twisted column, but the surface is full of holes and torn-looking bits, worst near the edges. Can you fix it without losing the twist? Save the fixed, standalone MSL 4.1 shader with fullscreenVertex and shaderFragment entry functions as `final.metal`.
 
 ```metal
 // Twisted column

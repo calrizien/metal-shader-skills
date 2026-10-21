@@ -9,7 +9,7 @@
     {
       "name": "metal-shader-skills",
       "source": "./",
-      "description": "Procedural MSL 4.0 shader art for Metal 4: function library, native renderer, compiler checks, templates, and integration guidance.",
+      "description": "Procedural MSL 4.1 shader art for Metal 4: function library, native renderer, compiler checks, templates, and integration guidance.",
       "category": "development",
       "tags": [
         "metal",

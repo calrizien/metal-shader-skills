@@ -1,6 +1,6 @@
 # Metal Shader Skills
 
-Procedural shader art for **Metal 4**, written in **Metal Shading Language 4.0**.
+Procedural shader art for **Metal 4**, written in **Metal Shading Language 4.1**.
 A fork of [gokayfem/shader-skills](https://github.com/gokayfem/shader-skills), with
 native MSL code, an Apple compiler check, and a renderer that uses the Metal 4 API.
 
@@ -48,7 +48,7 @@ Cursor, Copilot, and chat adapters are in [`adapters/`](adapters/).
 ## Use
 
 Ask: *“Use metal-shader-art to make a Metal 4 shader of a glass sculpture under
-soft studio light.”* Or: *“Port this GLSL landscape to MSL 4.0 and show a native
+soft studio light.”* Or: *“Port this GLSL landscape to MSL 4.1 and show a native
 render.”*
 
 From the installed skill directory:
@@ -62,12 +62,12 @@ python3 scripts/metal_tools.py render final.metal --output build/preview --size 
 
 `search` finds functions by name and use. `bundle` includes the required helpers
 and emits native `fullscreenVertex` and `shaderFragment` entry functions.
-`check` uses Apple's compiler with `-std=metal4.0`; a missing compiler is a
+`check` uses Apple's compiler with `-std=metal4.1`; a missing compiler is a
 failure. `render` saves a PNG, generated MSL, full diagnostics, and a JSON receipt.
 Use `check --lint-only` only when a static check is the intended result.
 
-Compilation needs Xcode 26 or later and the Metal Toolchain. Native rendering
-needs an Apple silicon Mac with macOS 26 or later and a Metal 4 GPU. The scripts
+Compilation needs Xcode 27 or later and the Metal Toolchain. Native rendering
+needs an Apple silicon Mac with macOS 27 or later and a Metal 4 GPU. The scripts
 use Python's standard library. They do not need a browser or an API key.
 
 ## What changed from upstream
@@ -78,14 +78,14 @@ use Python's standard library. They do not need a browser or an API key.
 | Scene entry | `shade(thread float4 &, float2)` inside a thread-local scene object |
 | Output | Complete native Metal vertex and fragment functions |
 | Uniforms | Explicit 16-byte buffer: resolution, time, frame |
-| Compiler | `xcrun metal -std=metal4.0`, safe math |
+| Compiler | `xcrun metal -std=metal4.1`, safe math |
 | Renderer | MTL4 compiler, queue, command buffer, allocator, argument table, residency set |
 | Validation | Original numerical GPU properties, native floating-point image checks, PNGs and hashes |
 | Packaging | Metal skill name, plugin manifests, adapters, guides, and macOS CI |
 
 Read the [Metal 4 integration guide](skills/metal-shader-art/references/metal4-integration.md)
 for resource lifetime, synchronization, buffer layout, texture binding, and color.
-MSL 4.0 is the explicit baseline even though Apple's linked specification is now 4.1.
+MSL 4.1 is the explicit baseline, matching Apple's current specification.
 The host API and language version are separate requirements.
 
 ## Library

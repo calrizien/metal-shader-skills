@@ -7,4 +7,4 @@ timeout_seconds: 900
 allowed_tools: [Read, Glob, Grep, Skill, Write, Edit, Bash]
 ---
 
-I'd like a Metal 4 shader where the camera glides slowly over eroded desert mountains at sunset: sharp ridges, sandy valleys, a warm low sun, and haze that swallows the distant peaks. Save the finished, standalone MSL 4.0 shader with fullscreenVertex and shaderFragment entry functions as `final.metal`.
+I'd like a Metal 4 shader where the camera glides slowly over eroded desert mountains at sunset: sharp ridges, sandy valleys, a warm low sun, and haze that swallows the distant peaks. Save the finished, standalone MSL 4.1 shader with fullscreenVertex and shaderFragment entry functions as `final.metal`.

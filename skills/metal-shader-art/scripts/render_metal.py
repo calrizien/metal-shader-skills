@@ -14,8 +14,8 @@ import sys
 def render(source: Path, output: Path, size: str, time_value: float, frame: int) -> int:
     from metal_tools import Library, lint_shader, shader_unit
 
-    if platform.system() != "Darwin" or platform.machine() != "arm64":
-        print("render requires an Apple silicon Mac, macOS 26+, Xcode 26+, and a Metal 4 GPU", file=sys.stderr)
+    if platform.system() != "Darwin" or platform.machine() != "arm64" or int(platform.mac_ver()[0].split(".")[0]) < 27:
+        print("render requires an Apple silicon Mac, macOS 27+, Xcode 27+, and a Metal 4 GPU", file=sys.stderr)
         return 1
     try:
         width, height = map(int, size.split("x"))
@@ -41,7 +41,7 @@ def render(source: Path, output: Path, size: str, time_value: float, frame: int)
     native_source = Path(__file__).with_name("metal_runner.mm")
     runner = output / "metal-runner"
     command = ["xcrun", "clang++", "-std=c++17", "-fobjc-arc", "-O2", "-arch", "arm64",
-               "-mmacosx-version-min=26.0", "-framework", "Foundation", "-framework", "Metal",
+               "-mmacosx-version-min=27.0", "-framework", "Foundation", "-framework", "Metal",
                "-framework", "CoreGraphics", "-framework", "ImageIO", str(native_source), "-o", str(runner)]
     compiled = subprocess.run(command, capture_output=True, text=True, timeout=120)
     (output / "host-compile.log").write_text(compiled.stdout + compiled.stderr)

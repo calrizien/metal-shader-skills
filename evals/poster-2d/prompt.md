@@ -7,4 +7,4 @@ timeout_seconds: 900
 allowed_tools: [Read, Glob, Grep, Skill, Write, Edit, Bash]
 ---
 
-Design a flat 2D poster as a Metal 4 shader: a big sun disc over three overlapping mountain silhouettes, a thin inset frame, halftone dots in the sky, crisp antialiased edges, and a retro orange-and-teal palette. Save the finished, standalone MSL 4.0 shader with fullscreenVertex and shaderFragment entry functions as `final.metal`.
+Design a flat 2D poster as a Metal 4 shader: a big sun disc over three overlapping mountain silhouettes, a thin inset frame, halftone dots in the sky, crisp antialiased edges, and a retro orange-and-teal palette. Save the finished, standalone MSL 4.1 shader with fullscreenVertex and shaderFragment entry functions as `final.metal`.

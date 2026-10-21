@@ -6,7 +6,7 @@ approximation, not a pixel-identical reconstruction.
 ---
 
 Use the `metal-shader-art` skill to reconstruct the main visual structure and
-motion of the supplied reference as a native Metal 4 shader. Target MSL 4.0.
+motion of the supplied reference as a native Metal 4 shader. Target MSL 4.1.
 
 First inspect the reference. Describe the camera, silhouette, depth layers,
 materials, light, colors, repeated forms, and motion. Identify what can be
@@ -31,7 +31,7 @@ performance without a measurement on the target GPU.
 Deliver:
 
 - An editable scene input and a complete bundled `.metal` file.
-- MSL 4.0 compiler results, with full diagnostics for any failure.
+- MSL 4.1 compiler results, with full diagnostics for any failure.
 - Native PNG previews at representative times and the render receipts.
 - A short list of art controls and remaining differences from the reference.
 - The host resource and color contract if it differs from the supplied template.

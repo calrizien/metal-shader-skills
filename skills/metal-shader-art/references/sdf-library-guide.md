@@ -23,7 +23,7 @@ blending, repetition, deformation, noise, and the MSL rules used by this Metal 4
 2. Write the shader against library names (`sdRoundCone`, `smin`, `fbm`, `softShadow`, ...) without pasting them.
 3. Bundle: `python3 scripts/metal_tools.py bundle shader.metal -o out.metal` inlines exactly the functions used, in
    a native MSL scene object, plus vertex and fragment entry functions.
-4. Check: `python3 scripts/metal_tools.py check out.metal` checks the scene and compiles with Apple's MSL 4.0 compiler. A missing compiler fails the check.
+4. Check: `python3 scripts/metal_tools.py check out.metal` checks the scene and compiles with Apple's MSL 4.1 compiler. A missing compiler fails the check.
 
 Scene contract for raymarching: define `float2 map(float3 p)` returning `float2(distance, materialId)`. `raymarch`,
 `calcNormal`, `softShadow`, `calcAO` and `sdfThickness` all call it. Combine objects with plain comparisons:

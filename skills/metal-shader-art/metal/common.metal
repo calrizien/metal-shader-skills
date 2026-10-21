@@ -1,5 +1,5 @@
 //! common: constants, rotation, remapping and shaping functions.
-//! Target: Metal Shading Language 4.0. Every function here is original and MIT licensed.
+//! Target: Metal Shading Language 4.1. Every function here is original and MIT licensed.
 
 const float PI  = 3.14159265358979;
 const float TAU = 6.28318530717959;

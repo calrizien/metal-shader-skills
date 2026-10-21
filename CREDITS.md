@@ -1,7 +1,7 @@
 # Credits and sources
 
 This fork ports [gokayfem/shader-skills](https://github.com/gokayfem/shader-skills)
-at commit `e09bc993bf04201f26c03c87c89210e9b472f526` to Metal Shading Language 4.0.
+at commit `e09bc993bf04201f26c03c87c89210e9b472f526` to Metal Shading Language 4.1.
 The procedural library, art templates, mathematical references, and numerical
 property oracles derive from that MIT-licensed project. The original copyright
 and license remain in `LICENSE`.

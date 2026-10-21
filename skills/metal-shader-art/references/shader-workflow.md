@@ -93,5 +93,5 @@ Before finalizing:
 - Lighting happens in linear color; picked colors are decoded with `srgbToLinear`.
 - The final color is exposed, tonemapped (per AA sample), then encoded once with `linearToSrgb` and dithered.
 - No sine hashes, no `?:` on structs, no `#version`, no custom uniforms.
-- The bundled shader passes `python3 scripts/metal_tools.py check` (it requires the MSL 4.0 compiler).
+- The bundled shader passes `python3 scripts/metal_tools.py check` (it requires the MSL 4.1 compiler).
 - The response explains the knobs a user can tune.

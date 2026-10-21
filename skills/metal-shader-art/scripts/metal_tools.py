@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Tools for the metal-shader-art MSL 4.0 library. Standard library only.
+"""Tools for the metal-shader-art MSL 4.1 library. Standard library only.
 
 Commands (run from anywhere):
   search TERM...        find library functions by name, summary or @use tags ("petal", "noise terrain")
   bundle SHADER [-o F]  inline exactly the library functions SHADER uses -> standalone Metal vertex and fragment code
-  check [SHADER...]     lint and require MSL 4.0 compilation (--lint-only opts out); no args = check the skill
+  check [SHADER...]     lint and require MSL 4.1 compilation (--lint-only opts out); no args = check the skill
   render SHADER        render through the native Metal 4 API and save a PNG plus receipt
   index [--check]       regenerate references/library-index.md (or fail if it is stale)
 
@@ -35,7 +35,7 @@ MODULE_ORDER = [
     "camera", "shading", "water", "color", "tonemap", "volume", "atmosphere", "post", "debug",
 ]
 
-METAL_PRELUDE = "/*\n" + (SKILL_DIR / "LICENSE").read_text(encoding="utf-8") + "*/\n" + """// metal-shader-skills: MSL 4.0, MIT.
+METAL_PRELUDE = "/*\n" + (SKILL_DIR / "LICENSE").read_text(encoding="utf-8") + "*/\n" + """// metal-shader-skills: MSL 4.1, MIT.
 // Derived from https://github.com/gokayfem/shader-skills
 // Metal fork: https://github.com/calrizien/metal-shader-skills
 #include <metal_stdlib>
@@ -348,7 +348,7 @@ SHADER_RULES = [
     (r"\b(?:vec[234]|[uib]vec[234]|mat[234]|gl_FragColor|gl_FragCoord|mainImage)\b",
      "error", "GLSL syntax remains; use native MSL types and shade(thread float4 &, float2)"),
     (r"\b(?:uniform|varying|precision|inout)\b", "error", "GLSL qualifier remains; use the MSL address-space contract"),
-    (r"^\s*#version\b", "error", "use the compiler flag -std=metal4.0"),
+    (r"^\s*#version\b", "error", "use the compiler flag -std=metal4.1"),
     (r"\btexture2D\s*\(", "error", "MSL samples a texture2d with .sample(sampler, uv)"),
     (r"\bfract\s*\(\s*[-+]?\s*(?:[\d.]+(?:[eE][-+]?\d+)?\s*\*\s*)?sin\s*\(|43758\.5453",
      "error", "use the integer PCG hash helpers in metal/hash.metal"),
@@ -551,7 +551,7 @@ def metal_compile(units: dict[str, str]) -> list[Finding]:
     for i, (where, code) in enumerate(units.items()):
         path = diagnostics / f"unit-{i:03d}.metal"
         path.write_text(code, encoding="utf-8")
-        command = ["xcrun", "-sdk", "macosx", "metal", "-std=metal4.0",
+        command = ["xcrun", "-sdk", "macosx", "metal", "-std=metal4.1",
                    "-fno-fast-math", "-c", str(path), "-o", str(path.with_suffix(".air"))]
         try:
             result = subprocess.run(command, capture_output=True, text=True, timeout=120)
@@ -702,7 +702,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"lint only: {len(units)} unit(s); compilation was not run")
     else:
         findings += metal_compile(units)
-        print(f"checked {len(units)} unit(s) with the MSL 4.0 compiler; full logs in build/metal-compile")
+        print(f"checked {len(units)} unit(s) with the MSL 4.1 compiler; full logs in build/metal-compile")
     errors = [f for f in findings if f.level == "error"]
     for f in findings:
         print(f)

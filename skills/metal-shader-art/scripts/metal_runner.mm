@@ -57,7 +57,7 @@ int main(int argc, const char *argv[]) {
         }
         NSString *manifestPath = @(argv[1]), *output = @(argv[2]);
         NSUInteger renderWidth = strtoul(argv[3], nullptr, 10), renderHeight = strtoul(argv[4], nullptr, 10);
-        NSMutableDictionary *receipt = [@{@"api": @"Metal 4", @"language": @"metal4.0",
+        NSMutableDictionary *receipt = [@{@"api": @"Metal 4", @"language": @"metal4.1",
             @"mathMode": @"safe", @"status": @"running",
             @"os": NSProcessInfo.processInfo.operatingSystemVersionString,
             @"results": [NSMutableArray array]} mutableCopy];
@@ -83,7 +83,7 @@ int main(int argc, const char *argv[]) {
             id<MTLSharedEvent> event = [device newSharedEvent];
             require(queue && allocator && command && compiler && event, error.description ?: @"Metal 4 initialization failed");
             MTLCompileOptions *options = [MTLCompileOptions new];
-            options.languageVersion = MTLLanguageVersion4_0;
+            options.languageVersion = MTLLanguageVersion4_1;
             options.mathMode = MTLMathModeSafe;
             options.mathFloatingPointFunctions = MTLMathFloatingPointFunctionsPrecise;
             NSMutableArray *jobs = [NSMutableArray array];

@@ -11,7 +11,7 @@ evaluations for this fork.** The Metal GPU receipt is a separate library check.
 | cloud-layer | Volumetric clouds |
 | poster-2d | Antialiased 2D poster |
 | fix-twist-holes | Correct a deformed distance field |
-| port-webgl1 | Port GLSL input to MSL 4.0 with explicit resources |
+| port-webgl1 | Port GLSL input to MSL 4.1 with explicit resources |
 | neg-css-gradient | Keep a CSS task in CSS |
 | neg-hlsl-compute | Keep a Unity compute task in HLSL |
 | neg-matplotlib-noise | Keep a plotting task in Python |

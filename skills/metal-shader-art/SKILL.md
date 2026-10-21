@@ -8,13 +8,13 @@ description: >-
   renderer. Not for HLSL, CSS effects, or general-purpose GPU compute.
 license: MIT
 metadata:
-  target: Metal 4 / MSL 4.0
+  target: Metal 4 / MSL 4.1
 ---
 
 # Metal Shader Art
 
 Start with the intended image. Build the scene in visible stages and inspect
-the native Metal result. Use MSL 4.0 as the language baseline.
+the native Metal result. Use MSL 4.1 as the language baseline.
 
 ## Workflow
 
@@ -28,7 +28,7 @@ the native Metal result. Use MSL 4.0 as the language baseline.
 4. Bundle and compile:
    `python3 scripts/metal_tools.py bundle scene.metal -o final.metal`
    and `python3 scripts/metal_tools.py check final.metal`.
-   The checker requires Apple's Metal compiler and uses `-std=metal4.0`.
+   The checker requires Apple's Metal compiler and uses `-std=metal4.1`.
    `--lint-only` is an explicit static check and does not prove compilation.
 5. Render with `python3 scripts/metal_tools.py render final.metal --output build/preview`.
    Inspect the PNG and receipt. Fix visible faults before calling the image
@@ -36,7 +36,7 @@ the native Metal result. Use MSL 4.0 as the language baseline.
 
 Run these commands from the installed skill directory, or use absolute script
 paths. Python tools use the standard library. Rendering needs an Apple silicon
-Mac, macOS 26 or later, Xcode 26 or later, and the Metal Toolchain.
+Mac, macOS 27 or later, Xcode 27 or later, and the Metal Toolchain.
 
 ## Scene contract
 
@@ -83,7 +83,7 @@ global variables. The result is a complete `.metal` file with
 - Light in linear color. Apply exposure, tonemap each AA sample, then average.
   Shipped templates encode with `linearToSrgb` once and need a non-sRGB target.
   For an `_sRGB` render target, remove that manual encoding. Never do both.
-- MSL 4.0 is a language setting. Metal 4 also has a host API. Use argument
+- MSL 4.1 is a language setting. Metal 4 also has a host API. Use argument
   tables, residency sets, command allocators, and explicit synchronization
   where that API requires them; see `references/metal4-integration.md`.
 

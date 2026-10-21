@@ -1,4 +1,4 @@
 interface:
   display_name: "Metal Shader Art"
   short_description: "Procedural MSL shaders and native Metal 4 previews"
-  default_prompt: "Use $metal-shader-art to build a procedural Metal 4 scene, compile it as MSL 4.0, and inspect a native render."
+  default_prompt: "Use $metal-shader-art to build a procedural Metal 4 scene, compile it as MSL 4.1, and inspect a native render."

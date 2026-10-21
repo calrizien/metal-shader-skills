@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-// metal-shader-skills: MSL 4.0, MIT.
+// metal-shader-skills: MSL 4.1, MIT.
 // Derived from https://github.com/gokayfem/shader-skills
 // Metal fork: https://github.com/calrizien/metal-shader-skills
 #include <metal_stdlib>
